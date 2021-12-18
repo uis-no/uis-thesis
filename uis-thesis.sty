@@ -28,7 +28,7 @@
 \RequirePackage[useregional,calc]{datetime2}
 \DTMsavenow{uistoday}
 
-% TODO check if Tahoma is available on Linux? 
+% TODO check if Tahoma is available on Linux and Overleaf?
 % Tahoma is a Microsoft font and is available on macOS and Windows.
 \RequirePackage{fontspec}
 \setmainfont{Tahoma}
@@ -40,6 +40,7 @@
 % TODO Find department specific photos to use.
 % TODO Known problem: date/month always follows the defined main langauge of the document
 % TODO The translation package seems to override nynorsk or norsk, whichever is defined last
+% TODO Fix Tahoma line spacing
 
 \newif\if@withphoto\@withphotofalse
 \DeclareOption{photo}{\@withphototrue}
@@ -88,7 +89,7 @@
 \definecolor{uis9}{cmyk}{0.00,0.02,0.07,0.08}
 
 % ----------------------------------------------------------------------------
-% Declare variables
+% Declare variables and macros
 % ----------------------------------------------------------------------------
 \def\VK@e{} % empty box to avoid blank space
 \def\VK@logofile{\ifcurrentbaselanguage{Norsk}{logo/uis-logo-no-digital}{logo/uis-logo-en-digital}}
@@ -140,7 +141,7 @@
 \def\restricted{\def\VK@restricted{\accessbox{\textcolor{\thepagecolor}{\GetTranslation{access}}}}}
 
 % ----------------------------------------------------------------------------
-% Define specific translations
+% Define translations
 % ----------------------------------------------------------------------------
 \DeclareTranslationFallback {uis}{University of Stavanger}
 \DeclareTranslation{English}{uis}{University of Stavanger}
