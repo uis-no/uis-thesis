@@ -62,17 +62,6 @@
 
 % 30 cm ; 19.2 cm: ratio: 0.64 TODO Define this as a length or something that can be used in the code
 
-\newtcbox{\accessbox}[1][tull]{
-	on line,
-	arc=0pt,
-	outer arc=0pt,
-	colback=white,
-	left=2pt,
-	right=2pt,
-	top=0pt,
-	bottom=0pt,
-	boxrule=0pt,
-}
 
 % ----------------------------------------------------------------------------
 % Define UiS allowed front page colors
@@ -110,9 +99,26 @@
   \or
     \def\uis@color@top{uis3}\def\uis@color@bot{uis3}\def\uis@color@text{white}
   \else
-    \PackageError{uis-thesis}{Unknown color ID ‘#1’}{Legal values: 0-8}
+    \PackageError{uis-thesis}{Unknown color theme ID ‘#1’}{Legal values: 0-8}
   \fi
 }
+
+\newtcbox{\accessbox}[1][tull]{
+	on line,
+	arc=0pt,
+	outer arc=0pt,
+	colback=\uis@color@text,
+	left=2pt,
+	right=2pt,
+	top=0pt,
+	bottom=0pt,
+	boxrule=0pt,
+}
+
+\def\VK@restricted{}
+% \def\restricted{\def\VK@restricted{\accessbox{\textcolor{\thepagecolor}{\GetTranslation{access}}}}}
+\def\restricted{\def\VK@restricted{\colorbox{\uis@color@text}{\textcolor{\uis@color@top}{\GetTranslation{access}}}}}
+
 
 % ----------------------------------------------------------------------------
 % Declare variables and macros
@@ -162,9 +168,6 @@
     \PackageError{uis-thesis}{Unknown specialization ‘#1’}{Legal specializations: cs, ds, ee, medtek}
   }
 }
-
-\def\VK@restricted{}
-\def\restricted{\def\VK@restricted{\accessbox{\textcolor{\thepagecolor}{\GetTranslation{access}}}}}
 
 % ----------------------------------------------------------------------------
 % Define translations
