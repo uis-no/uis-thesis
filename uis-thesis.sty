@@ -109,6 +109,8 @@
   \ifx\VK@photo#1\else\photo{#1}\fi
 }
 
+% TODO Make custom version of \GetTranslation that checks if non-empty return value and typeout warning / error if invalid input key is provide
+
 \def\VK@title{}
 \def\title#1{\def\VK@title{\VK@titlefontsize{#1}}}
 \def\VK@authors{}
@@ -118,9 +120,11 @@
 \def\VK@thesistype{}
 \def\thesistype#1{\def\VK@thesistype{\GetTranslation{#1}}}
 \def\VK@specialization{}
-\def\specialization#1{\def\VK@specialization{#1}}
+\def\specialization#1{\def\VK@specialization{\GetTranslation{#1}}}
 \def\VK@access{}
 \def\access#1{\def\VK@access{\accessbox{\textcolor{\thepagecolor}{#1}}}}
+\def\VK@restricted{}
+\def\restricted{\def\VK@restricted{\accessbox{\textcolor{\thepagecolor}{\GetTranslation{access}}}}}
 
 % ----------------------------------------------------------------------------
 % Define specific translations
@@ -198,27 +202,16 @@
 \date{\DTMMonthname{\DTMfetchmonth{uistoday}} \DTMfetchyear{uistoday}}
 
 % ----------------------------------------------------------------------------
-% Predeclared inputs for the \specialization{} command
-% ----------------------------------------------------------------------------
-\def\cs{\GetTranslation{cs}}
-\def\ee{\GetTranslation{ee}}
-\def\medtek{\GetTranslation{med}}
-\def\datascience{\GetTranslation{ds}}
-
-% ----------------------------------------------------------------------------
-% Predeclared input for the \access{} command
-% ----------------------------------------------------------------------------
-\def\restricted{\GetTranslation{access}}
-
-% ----------------------------------------------------------------------------
 % Macors
 % ----------------------------------------------------------------------------
-\newcommand{\uisfront}[1]{
+\newcommand{\uisfront}[2][uis2]{
 \begin{titlepage}
 \newgeometry{margin=0cm} %defines the geometry for the titlepage
 \pagecolor{#1}
 
 % \noindent X\dotfill X % for seeing the line width
+
+% TODO decide how to define colors; use two arguments ?? instead of fixed uis8 on line 255
 
 \noindent
 \begin{minipage}[c][0.34\paperheight][t]{\textwidth}
@@ -244,13 +237,13 @@
 \rule{\textwidth}{1pt}\par
 \vspace*{1mm}
 \textsf{\VK@mainfontsize{\VK@thesistype{} - \VK@specialization{} - \VK@date}}
-\hfill\textsf{\VK@access}
+\hfill\textsf{\VK@restricted}
 \end{minipage}
 \end{minipage}
 %
 \vfill
 \noindent
-\colorbox{uis8}{
+\colorbox{#2}{
 \begin{minipage}[l][0.64\paperheight][b]{\textwidth}
 \bottompart
 \end{minipage}}
