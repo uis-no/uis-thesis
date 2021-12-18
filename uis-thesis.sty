@@ -91,8 +91,7 @@
 % Declare variables
 % ----------------------------------------------------------------------------
 \def\VK@logofile{}
-\newif\if@logohere \@logoherefalse
-\def\logo#1{\ifx\VK@e#1\else\def\VK@logofile{#1}\@logoheretrue\fi}
+\def\logo#1{\def\VK@logofile{#1}}
 \def\VK@photo{}
 \def\photo#1{\def\VK@photo{#1}}
 
@@ -100,11 +99,14 @@
 \def\VK@titlefontsize#1{{\fontsize{20pt}{28pt}\selectfont #1}}
 
 \def\VK@organization{}
-\def\organization#1{\ifx\VK@e#1\else\def\VK@organization{#1}\fi}
+\def\organization#1{\def\VK@organization{#1}}
 \def\VK@faculty{}
-\def\faculty#1{\def\VK@faculty{\VKmainfontsize{#1}}}
+\def\faculty#1{\def\VK@faculty{\VK@mainfontsize{\GetTranslation{#1}}}}
 \def\VK@department{}
-\def\department#1{\def\VK@department{\VK@mainfontsize{\GetTranslation{#1}}}\photo{#1}}
+\def\department#1{\def\VK@department{%
+  \VK@mainfontsize{\GetTranslation{#1}}}
+  \ifx\VK@photo#1\else\photo{#1}\fi
+}
 
 \def\VK@title{}
 \def\title#1{\def\VK@title{\VK@titlefontsize{#1}}}
@@ -125,9 +127,9 @@
 \DeclareTranslationFallback {uis}{University of Stavanger}
 \DeclareTranslation{English}{uis}{University of Stavanger}
 \DeclareTranslation{Norsk}  {uis}{Universitetet i Stavanger}
-\DeclareTranslationFallback {faculty}{Faculty of Science and Technology}
-\DeclareTranslation{English}{faculty}{Faculty of Science and Technology}
-\DeclareTranslation{Norsk}  {faculty}{Det teknisk-naturvitskaplege fakultet}
+\DeclareTranslationFallback {tn}{Faculty of Science and Technology}
+\DeclareTranslation{English}{tn}{Faculty of Science and Technology}
+\DeclareTranslation{Norsk}  {tn}{Det teknisk-naturvitskaplege fakultet}
 
 \DeclareTranslationFallback {ide}{Department of Electrical Engineering and Computer Science}
 \DeclareTranslation{English}{ide}{Department of Electrical Engineering and Computer Science}
