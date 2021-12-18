@@ -91,8 +91,7 @@
 % Declare variables
 % ----------------------------------------------------------------------------
 \def\VK@e{} % empty box to avoid blank space
-\def\VK@logofile{}
-\def\logo#1{\def\VK@logofile{#1}}
+\def\VK@logofile{\ifcurrentbaselanguage{Norsk}{logo/uis-logo-no-digital}{logo/uis-logo-en-digital}}
 \def\VK@photo{}
 \def\photo#1{\def\VK@photo{#1}}
 
@@ -104,25 +103,39 @@
 \def\VK@faculty{}
 \def\faculty#1{\def\VK@faculty{\VK@mainfontsize{\GetTranslation{#1}}}}
 \def\VK@department{}
-\def\department#1{\def\VK@department{%
-  \VK@mainfontsize{\GetTranslation{#1}}}
-  \ifx\VK@photo#1\else\photo{#1}\fi
+\def\department#1{
+  \IfTranslation{\languagename}{#1}{
+    \def\VK@department{\VK@mainfontsize{\GetTranslation{#1}}}
+    \ifx\VK@photo#1\else\photo{#1}\fi
+  }{
+    \PackageError{uis-thesis}{Unknown thesis type ‘#1’}{Legal departments: ide, imf, imbm, ikbm, ier, iep, isøp}
+  }
 }
-
-% TODO Make custom version of \GetTranslation that checks if non-empty return value and typeout warning / error if invalid input key is provide
 
 \def\VK@title{}
 \def\title#1{\def\VK@title{\VK@titlefontsize{#1}}}
 \def\VK@authors{}
 \def\authors#1{\def\VK@authors{\VK@mainfontsize{#1}}}
-\def\VK@date{}
-\def\date#1{\def\VK@date{#1}}
+\def\VK@date{\DTMMonthname{\DTMfetchmonth{uistoday}} \DTMfetchyear{uistoday}}
+
 \def\VK@thesistype{}
-\def\thesistype#1{\def\VK@thesistype{\GetTranslation{#1}}}
+\def\thesistype#1{
+  \IfTranslation{\languagename}{#1}{
+    \def\VK@thesistype{\GetTranslation{#1}}
+  }{
+    \PackageError{uis-thesis}{Unknown thesis type ‘#1’}{Legal thesis types: bachelor, master, phd}
+  }
+}
+
 \def\VK@specialization{}
-\def\specialization#1{\def\VK@specialization{\GetTranslation{#1}}}
-\def\VK@access{}
-\def\access#1{\def\VK@access{\accessbox{\textcolor{\thepagecolor}{#1}}}}
+\def\specialization#1{
+  \IfTranslation{\languagename}{#1}{
+    \def\VK@specialization{\GetTranslation{#1}}
+  }{
+    \PackageError{uis-thesis}{Unknown specialization ‘#1’}{Legal specializations: cs, ds, ee, medtek}
+  }
+}
+
 \def\VK@restricted{}
 \def\restricted{\def\VK@restricted{\accessbox{\textcolor{\thepagecolor}{\GetTranslation{access}}}}}
 
@@ -194,12 +207,6 @@
 \DeclareTranslationFallback {med}{Medical Technology}
 \DeclareTranslation{English}{med}{Medical Technology}
 \DeclareTranslation{Norsk}  {med}{Medisinsk teknologi}
-
-% ----------------------------------------------------------------------------
-% Predeclare variables
-% ----------------------------------------------------------------------------
-\logo{\ifcurrentbaselanguage{Norsk}{logo/uis-logo-no-digital}{logo/uis-logo-en-digital}}
-\date{\DTMMonthname{\DTMfetchmonth{uistoday}} \DTMfetchyear{uistoday}}
 
 % ----------------------------------------------------------------------------
 % Macors
