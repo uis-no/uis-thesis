@@ -1,0 +1,281 @@
+%!TEX root = ./report.tex
+
+%% uis-thesis.sty
+%% Copyright 2021 Hein Meling
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Hein Meling.
+%
+% This work consists of the file uis-thesis.sty.
+
+\ProvidesPackage{uis-thesis}[2021/12/17 Thesis Template for University of Stavanger]
+\typeout{(c) 2021 Hein Meling}
+
+\RequirePackage{translations}
+\RequirePackage{geometry}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage[useregional,calc]{datetime2}
+\DTMsavenow{uistoday}
+
+% TODO check if Tahoma is available on Linux? 
+% Tahoma is a Microsoft font and is available on macOS and Windows.
+\RequirePackage{fontspec}
+\setmainfont{Tahoma}
+
+% \RequirePackage[familydefault]{Rosario}
+% \RequirePackage[light,condensed]{roboto}
+% \RequirePackage[T1]{fontenc}
+
+% TODO Find department specific photos to use.
+% TODO Known problem: date/month always follows the defined main langauge of the document
+% TODO The translation package seems to override nynorsk or norsk, whichever is defined last
+
+\DeclareOption{photo}{\newcommand{\wordcolour}{sharelatexcolour}}
+\DeclareOption*{\PackageWarning{uis-thesis}{Unknown ‘\CurrentOption’}}
+\ProcessOptions\relax
+
+% Redefine \pagecolor to define \thepagecolor for getting the current page color.
+% This is used to invert the colorbox text for the \access macro.
+\let\origpagecolor\pagecolor
+\renewcommand{\pagecolor}[1]{
+  \xdef\thepagecolor{#1}%
+  \origpagecolor{\thepagecolor}%
+}
+
+% 30 cm ; 19.2 cm: ratio: 0.64 TODO Define this as a length or something that can be used in the code
+
+\newtcbox{\accessbox}[1][tull]{
+	on line,
+	arc=0pt,
+	outer arc=0pt,
+	colback=white,
+	left=2pt,
+	right=2pt,
+	top=0pt,
+	bottom=0pt,
+	boxrule=0pt,
+}
+
+% ----------------------------------------------------------------------------
+% Define UiS allowed front page colors
+% ----------------------------------------------------------------------------
+\definecolor{uis1}{cmyk}{1.00,0.90,0.00,0.60}
+\definecolor{uis2}{cmyk}{0.00,0.80,1.00,0.20}
+\definecolor{uis3}{cmyk}{0.00,0.85,0.65,0.70}
+\definecolor{uis4}{cmyk}{1.00,0.80,0.00,0.00}
+\definecolor{uis5}{cmyk}{0.00,0.73,1.00,0.00}
+\definecolor{uis6}{cmyk}{0.00,0.23,0.33,0.40}
+\definecolor{uis7}{cmyk}{0.37,0.15,0.00,0.00}
+\definecolor{uis8}{cmyk}{0.00,0.50,1.00,0.00}
+\definecolor{uis9}{cmyk}{0.00,0.02,0.07,0.08}
+
+% ----------------------------------------------------------------------------
+% Declare variables
+% ----------------------------------------------------------------------------
+\def\VK@logofile{}
+\newif\if@logohere \@logoherefalse
+\def\logo#1{\ifx\VK@e#1\else\def\VK@logofile{#1}\@logoheretrue\fi}
+\def\VK@photo{}
+\def\photo#1{\def\VK@photo{#1}}
+
+\def\VK@mainfontsize#1{{\fontsize{12pt}{14pt}\selectfont #1}}
+\def\VK@titlefontsize#1{{\fontsize{20pt}{28pt}\selectfont #1}}
+
+\def\VK@organization{}
+\def\organization#1{\ifx\VK@e#1\else\def\VK@organization{#1}\fi}
+\def\VK@faculty{}
+\def\faculty#1{\def\VK@faculty{\VKmainfontsize{#1}}}
+\def\VK@department{}
+\def\department#1{\def\VK@department{\VK@mainfontsize{\GetTranslation{#1}}}\photo{#1}}
+
+\def\VK@title{}
+\def\title#1{\def\VK@title{\VK@titlefontsize{#1}}}
+\def\VK@authors{}
+\def\authors#1{\def\VK@authors{\VK@mainfontsize{#1}}}
+\def\VK@date{}
+\def\date#1{\def\VK@date{#1}}
+\def\VK@thesistype{}
+\def\thesistype#1{\def\VK@thesistype{\GetTranslation{#1}}}
+\def\VK@specialization{}
+\def\specialization#1{\def\VK@specialization{#1}}
+\def\VK@access{}
+\def\access#1{\def\VK@access{\accessbox{\textcolor{\thepagecolor}{#1}}}}
+
+% ----------------------------------------------------------------------------
+% Define specific translations
+% ----------------------------------------------------------------------------
+\DeclareTranslationFallback {uis}{University of Stavanger}
+\DeclareTranslation{English}{uis}{University of Stavanger}
+\DeclareTranslation{Norsk}  {uis}{Universitetet i Stavanger}
+\DeclareTranslationFallback {faculty}{Faculty of Science and Technology}
+\DeclareTranslation{English}{faculty}{Faculty of Science and Technology}
+\DeclareTranslation{Norsk}  {faculty}{Det teknisk-naturvitskaplege fakultet}
+
+\DeclareTranslationFallback {ide}{Department of Electrical Engineering and Computer Science}
+\DeclareTranslation{English}{ide}{Department of Electrical Engineering and Computer Science}
+\DeclareTranslation{Norsk}  {ide}{Institutt for data- og elektroteknologi}
+
+\DeclareTranslationFallback {imf}{Department of Mathematics and Physics}
+\DeclareTranslation{English}{imf}{Department of Mathematics and Physics}
+\DeclareTranslation{Norsk}  {imf}{Institutt for matematikk og fysikk}
+
+%TODO english imbm is too long ; decide what to do
+\DeclareTranslationFallback {imbm}{Department of Mechanical and Structural Engineering and Materials Science}
+\DeclareTranslation{English}{imbm}{Department of Mechanical and Structural Engineering and Materials Science}
+\DeclareTranslation{Norsk}  {imbm}{Institutt for maskin, bygg og materialteknologi}
+
+\DeclareTranslationFallback {ikbm}{Department of Chemistry, Bioscience and Environmental Engineering}
+\DeclareTranslation{English}{ikbm}{Department of Chemistry, Bioscience and Environmental Engineering}
+\DeclareTranslation{Norsk}  {ikbm}{Institutt for kjemi, biovitenskap og miljøteknologi}
+
+\DeclareTranslationFallback {ier}{Department of Energy Resources}
+\DeclareTranslation{English}{ier}{Department of Energy Resources}
+\DeclareTranslation{Norsk}  {ier}{Institutt for energiressursar} %nynorsk?
+
+\DeclareTranslationFallback {iep}{Department of Energy and Petroleum Engineering}
+\DeclareTranslation{English}{iep}{Department of Energy and Petroleum Engineering}
+\DeclareTranslation{Norsk}  {iep}{Institutt for energi- og petroleumsteknologi}
+
+\DeclareTranslationFallback {isøp}{Department of Safety, Economics and Planning}
+\DeclareTranslation{English}{isøp}{Department of Safety, Economics and Planning}
+\DeclareTranslation{Norsk}  {isøp}{Institutt for sikkerheit, økonomi og planlegging} %nynorsk?
+
+\DeclareTranslationFallback {bachelor}{Bachelor's Thesis}
+\DeclareTranslation{English}{bachelor}{Bachelor's Thesis}
+\DeclareTranslation{Nynorsk}{bachelor}{Bacheloroppgåve}
+\DeclareTranslation{Norsk}  {bachelor}{Bacheloroppgave}
+\DeclareTranslationFallback {master}{Master's Thesis}
+\DeclareTranslation{English}{master}{Master's Thesis}
+\DeclareTranslation{Nynorsk}{master}{Masteroppgåve}
+\DeclareTranslation{Norsk}  {master}{Masteroppgave}
+\DeclareTranslationFallback {phd}{PhD Thesis}
+\DeclareTranslation{English}{phd}{PhD Thesis}
+\DeclareTranslation{Nynorsk}{phd}{Doktoroppgåve}
+\DeclareTranslation{Norsk}  {phd}{Doktoroppgave}
+\DeclareTranslationFallback {access}{Restricted Access}
+\DeclareTranslation{English}{access}{Restricted Access}
+\DeclareTranslation{Nynorsk}{access}{Begrensa tilgang}
+\DeclareTranslation{Norsk}  {access}{Begrenset tilgang}
+
+\DeclareTranslationFallback {cs}{Computer Science}
+\DeclareTranslation{English}{cs}{Computer Science}
+\DeclareTranslation{Norsk}  {cs}{Datateknologi}
+\DeclareTranslationFallback {ds}{Data Science}
+\DeclareTranslation{English}{ds}{Data Science}
+\DeclareTranslation{Norsk}  {ds}{Datavitenskap}
+\DeclareTranslationFallback {ee}{Electrical Engineering}
+\DeclareTranslation{English}{ee}{Electrical Engineering}
+\DeclareTranslation{Norsk}  {ee}{Elektroteknologi}
+\DeclareTranslationFallback {med}{Medical Technology}
+\DeclareTranslation{English}{med}{Medical Technology}
+\DeclareTranslation{Norsk}  {med}{Medisinsk teknologi}
+
+% ----------------------------------------------------------------------------
+% Predeclare variables
+% ----------------------------------------------------------------------------
+\logo{\ifcurrentbaselanguage{Norsk}{logo/uis-logo-no-digital}{logo/uis-logo-en-digital}}
+\date{\DTMMonthname{\DTMfetchmonth{uistoday}} \DTMfetchyear{uistoday}}
+
+% ----------------------------------------------------------------------------
+% Predeclared inputs for the \specialization{} command
+% ----------------------------------------------------------------------------
+\def\cs{\GetTranslation{cs}}
+\def\ee{\GetTranslation{ee}}
+\def\medtek{\GetTranslation{med}}
+\def\datascience{\GetTranslation{ds}}
+
+% ----------------------------------------------------------------------------
+% Predeclared input for the \access{} command
+% ----------------------------------------------------------------------------
+\def\restricted{\GetTranslation{access}}
+
+% ----------------------------------------------------------------------------
+% Macors
+% ----------------------------------------------------------------------------
+\newcommand{\uisfront}[1]{
+\begin{titlepage}
+\newgeometry{margin=0cm} %defines the geometry for the titlepage
+\pagecolor{#1}
+
+% \noindent X\dotfill X % for seeing the line width
+
+\begin{figure}[htp]
+\vspace*{2cm}
+\hspace*{6mm}
+\begin{minipage}[t]{0.15\textwidth}
+\vspace{0pt} % necessary for top alignment
+\includegraphics[width=\textwidth]{\VK@logofile}
+\end{minipage}
+\hspace*{6mm}
+%
+\begin{minipage}[t]{0.73\textwidth}
+\color{white}
+\vspace{0pt} % necessary for top alignment
+\textbf{\textsf{\MakeUppercase \VK@authors}}\par
+\textsf{\MakeUppercase \VK@department}\par
+\vspace*{-1mm}
+\rule{\textwidth}{3pt}\par
+\vspace*{3mm}
+\raggedright \textbf{\textsf{\VK@title}}\par
+\vspace*{1mm}
+\rule{\textwidth}{1pt}\par
+\vspace*{1mm}
+\textsf{\VK@mainfontsize{\VK@thesistype{} - \VK@specialization{} - \VK@date}}
+\hfill\textsf{\VK@access}
+\end{minipage}
+\end{figure}
+
+% \noindent
+% \colorbox{uis8}{
+% \begin{minipage}[l][0.64\paperheight][c]{\textwidth}
+% ~
+% \end{minipage}}
+
+\vfill
+\noindent
+\begin{minipage}[l][0.64\paperheight][b]{\textwidth}
+\includegraphics[width=\textwidth,trim=5cm 0cm 0cm 5cm]{photos/\VK@photo}
+\end{minipage}
+
+\end{titlepage}
+\restoregeometry % restores the geometry
+\nopagecolor     % restore the color pages to white
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
