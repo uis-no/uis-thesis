@@ -26,7 +26,6 @@
 \RequirePackage{graphicx}
 \RequirePackage[most]{tcolorbox}
 \RequirePackage[useregional,calc]{datetime2}
-\DTMsavenow{uistoday}
 
 % TODO check if Tahoma is available on Linux and Overleaf?
 % Tahoma is a Microsoft font and is available on macOS and Windows.
@@ -88,6 +87,33 @@
 \definecolor{uis8}{cmyk}{0.00,0.50,1.00,0.00}
 \definecolor{uis9}{cmyk}{0.00,0.02,0.07,0.08}
 
+\def\uis@color@top{}
+\def\uis@color@bot{}
+\def\uis@color@text{}
+\def\uiscolors#1{
+  \ifcase#1\relax
+    \def\uis@color@top{uis7}\def\uis@color@bot{uis1}\def\uis@color@text{uis1}
+  \or
+    \def\uis@color@top{uis9}\def\uis@color@bot{uis1}\def\uis@color@text{uis1}
+  \or
+    \def\uis@color@top{uis8}\def\uis@color@bot{uis2}\def\uis@color@text{white}
+  \or
+    \def\uis@color@top{uis1}\def\uis@color@bot{uis1}\def\uis@color@text{white}
+  \or
+    \def\uis@color@top{uis7}\def\uis@color@bot{uis7}\def\uis@color@text{uis1}
+  \or
+    \def\uis@color@top{uis2}\def\uis@color@bot{uis2}\def\uis@color@text{white}
+  \or
+    \def\uis@color@top{uis5}\def\uis@color@bot{uis5}\def\uis@color@text{white}
+  \or
+    \def\uis@color@top{uis8}\def\uis@color@bot{uis8}\def\uis@color@text{white}
+  \or
+    \def\uis@color@top{uis3}\def\uis@color@bot{uis3}\def\uis@color@text{white}
+  \else
+    \PackageError{uis-thesis}{Unknown color ID ‘#1’}{Legal values: 0-8}
+  \fi
+}
+
 % ----------------------------------------------------------------------------
 % Declare variables and macros
 % ----------------------------------------------------------------------------
@@ -117,7 +143,7 @@
 \def\title#1{\def\VK@title{\VK@titlefontsize{#1}}}
 \def\VK@authors{}
 \def\authors#1{\def\VK@authors{\VK@mainfontsize{#1}}}
-\def\VK@date{\DTMMonthname{\DTMfetchmonth{uistoday}} \DTMfetchyear{uistoday}}
+\def\VK@date{\DTMsavenow{uistoday}\DTMMonthname{\DTMfetchmonth{uistoday}} \DTMfetchyear{uistoday}}
 
 \def\VK@thesistype{}
 \def\thesistype#1{
@@ -212,14 +238,11 @@
 % ----------------------------------------------------------------------------
 % Macors
 % ----------------------------------------------------------------------------
-\newcommand{\uisfront}[2][uis2]{
+\newcommand{\uisfront}[1]{
 \begin{titlepage}
 \newgeometry{margin=0cm} %defines the geometry for the titlepage
-\pagecolor{#1}
-
+\pagecolor{\uis@color@top}
 % \noindent X\dotfill X % for seeing the line width
-
-% TODO decide how to define colors; use two arguments ?? instead of fixed uis8 on line 255
 
 \noindent
 \begin{minipage}[c][0.34\paperheight][t]{\textwidth}
@@ -232,7 +255,7 @@
 \hspace*{6mm}
 %
 \begin{minipage}[t]{0.73\textwidth}
-\color{white}
+\color{\uis@color@text}
 \vspace{0pt} % necessary for top alignment
 \textbf{\textsf{\MakeUppercase \VK@authors}}\par
 \ifx\VK@e\VK@faculty\else\textsf{\MakeUppercase \VK@faculty}\par\fi
@@ -251,7 +274,7 @@
 %
 \vfill
 \noindent
-\colorbox{#2}{
+\colorbox{\uis@color@bot}{
 \begin{minipage}[l][0.64\paperheight][b]{\textwidth}
 \bottompart
 \end{minipage}}
