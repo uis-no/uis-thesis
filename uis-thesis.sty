@@ -90,6 +90,7 @@
 % ----------------------------------------------------------------------------
 % Declare variables
 % ----------------------------------------------------------------------------
+\def\VK@e{} % empty box to avoid blank space
 \def\VK@logofile{}
 \def\logo#1{\def\VK@logofile{#1}}
 \def\VK@photo{}
@@ -233,6 +234,7 @@
 \color{white}
 \vspace{0pt} % necessary for top alignment
 \textbf{\textsf{\MakeUppercase \VK@authors}}\par
+\ifx\VK@e\VK@faculty\else\textsf{\MakeUppercase \VK@faculty}\par\fi
 \textsf{\MakeUppercase \VK@department}\par
 \vspace*{-1mm}
 \rule{\textwidth}{3pt}\par
