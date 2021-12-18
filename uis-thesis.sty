@@ -24,7 +24,6 @@
 \RequirePackage{geometry}
 \RequirePackage{xcolor}
 \RequirePackage{graphicx}
-\RequirePackage[most]{tcolorbox}
 \RequirePackage[useregional,calc]{datetime2}
 
 % TODO check if Tahoma is available on Linux and Overleaf?
@@ -49,22 +48,14 @@
 % Bottom part of frontpage is an empty minipage with ~, unless the photo option is specified.
 \newcommand{\bottompart}{~}
 \if@withphoto
-  \renewcommand{\bottompart}{\includegraphics[width=\textwidth,trim=5cm 0cm 0cm 5cm]{photos/\VK@photo}}
+  \renewcommand{\bottompart}{\includegraphics[width=\textwidth,trim=5cm 0cm 0cm 5cm]{photos/\uis@photo}}
 \fi
-
-% Redefine \pagecolor to define \thepagecolor for getting the current page color.
-% This is used to invert the colorbox text for the \access macro.
-\let\origpagecolor\pagecolor
-\renewcommand{\pagecolor}[1]{
-  \xdef\thepagecolor{#1}%
-  \origpagecolor{\thepagecolor}%
-}
 
 % 30 cm ; 19.2 cm: ratio: 0.64 TODO Define this as a length or something that can be used in the code
 
 
 % ----------------------------------------------------------------------------
-% Define UiS allowed front page colors
+% Define UiS allowed front page colors and related variables and macros
 % ----------------------------------------------------------------------------
 \definecolor{uis1}{cmyk}{1.00,0.90,0.00,0.60}
 \definecolor{uis2}{cmyk}{0.00,0.80,1.00,0.20}
@@ -103,67 +94,53 @@
   \fi
 }
 
-\newtcbox{\accessbox}[1][tull]{
-	on line,
-	arc=0pt,
-	outer arc=0pt,
-	colback=\uis@color@text,
-	left=2pt,
-	right=2pt,
-	top=0pt,
-	bottom=0pt,
-	boxrule=0pt,
-}
-
-\def\VK@restricted{}
-% \def\restricted{\def\VK@restricted{\accessbox{\textcolor{\thepagecolor}{\GetTranslation{access}}}}}
-\def\restricted{\def\VK@restricted{\colorbox{\uis@color@text}{\textcolor{\uis@color@top}{\GetTranslation{access}}}}}
-
+\def\uis@restricted{}
+\def\restricted{\def\uis@restricted{\colorbox{\uis@color@text}{\textcolor{\uis@color@top}{\GetTranslation{access}}}}}
 
 % ----------------------------------------------------------------------------
 % Declare variables and macros
 % ----------------------------------------------------------------------------
-\def\VK@e{} % empty box to avoid blank space
-\def\VK@logofile{\ifcurrentbaselanguage{Norsk}{logo/uis-logo-no-digital}{logo/uis-logo-en-digital}}
-\def\VK@photo{}
-\def\photo#1{\def\VK@photo{#1}}
+\def\uis@e{} % empty box to avoid blank space
+\def\uis@logofile{\ifcurrentbaselanguage{Norsk}{logo/uis-logo-no-digital}{logo/uis-logo-en-digital}}
+\def\uis@photo{}
+\def\photo#1{\def\uis@photo{#1}}
 
-\def\VK@mainfontsize#1{{\fontsize{12pt}{14pt}\selectfont #1}}
-\def\VK@titlefontsize#1{{\fontsize{20pt}{28pt}\selectfont #1}}
+\def\uis@mainfontsize#1{{\fontsize{12pt}{14pt}\selectfont #1}}
+\def\uis@titlefontsize#1{{\fontsize{20pt}{28pt}\selectfont #1}}
 
-\def\VK@organization{}
-\def\organization#1{\def\VK@organization{#1}}
-\def\VK@faculty{}
-\def\faculty#1{\def\VK@faculty{\VK@mainfontsize{\GetTranslation{#1}}}}
-\def\VK@department{}
+\def\uis@organization{}
+\def\organization#1{\def\uis@organization{#1}}
+\def\uis@faculty{}
+\def\faculty#1{\def\uis@faculty{\uis@mainfontsize{\GetTranslation{#1}}}}
+\def\uis@department{}
 \def\department#1{
   \IfTranslation{\languagename}{#1}{
-    \def\VK@department{\VK@mainfontsize{\GetTranslation{#1}}}
-    \ifx\VK@photo#1\else\photo{#1}\fi
+    \def\uis@department{\uis@mainfontsize{\GetTranslation{#1}}}
+    \ifx\uis@photo#1\else\photo{#1}\fi
   }{
     \PackageError{uis-thesis}{Unknown thesis type ‘#1’}{Legal departments: ide, imf, imbm, ikbm, ier, iep, isøp}
   }
 }
 
-\def\VK@title{}
-\def\title#1{\def\VK@title{\VK@titlefontsize{#1}}}
-\def\VK@authors{}
-\def\authors#1{\def\VK@authors{\VK@mainfontsize{#1}}}
-\def\VK@date{\DTMsavenow{uistoday}\DTMMonthname{\DTMfetchmonth{uistoday}} \DTMfetchyear{uistoday}}
+\def\uis@title{}
+\def\title#1{\def\uis@title{\uis@titlefontsize{#1}}}
+\def\uis@authors{}
+\def\authors#1{\def\uis@authors{\uis@mainfontsize{#1}}}
+\def\uis@date{\DTMsavenow{uistoday}\DTMMonthname{\DTMfetchmonth{uistoday}} \DTMfetchyear{uistoday}}
 
-\def\VK@thesistype{}
+\def\uis@thesistype{}
 \def\thesistype#1{
   \IfTranslation{\languagename}{#1}{
-    \def\VK@thesistype{\GetTranslation{#1}}
+    \def\uis@thesistype{\GetTranslation{#1}}
   }{
     \PackageError{uis-thesis}{Unknown thesis type ‘#1’}{Legal thesis types: bachelor, master, phd}
   }
 }
 
-\def\VK@specialization{}
+\def\uis@specialization{}
 \def\specialization#1{
   \IfTranslation{\languagename}{#1}{
-    \def\VK@specialization{\GetTranslation{#1}}
+    \def\uis@specialization{\GetTranslation{#1}}
   }{
     \PackageError{uis-thesis}{Unknown specialization ‘#1’}{Legal specializations: cs, ds, ee, medtek}
   }
@@ -253,25 +230,25 @@
 \hspace*{6mm}
 \begin{minipage}[t]{0.15\textwidth}
 \vspace{0pt} % necessary for top alignment
-\includegraphics[width=\textwidth]{\VK@logofile}
+\includegraphics[width=\textwidth]{\uis@logofile}
 \end{minipage}
 \hspace*{6mm}
 %
 \begin{minipage}[t]{0.73\textwidth}
 \color{\uis@color@text}
 \vspace{0pt} % necessary for top alignment
-\textbf{\textsf{\MakeUppercase \VK@authors}}\par
-\ifx\VK@e\VK@faculty\else\textsf{\MakeUppercase \VK@faculty}\par\fi
-\textsf{\MakeUppercase \VK@department}\par
+\textbf{\textsf{\MakeUppercase \uis@authors}}\par
+\ifx\uis@e\uis@faculty\else\textsf{\MakeUppercase \uis@faculty}\par\fi
+\textsf{\MakeUppercase \uis@department}\par
 \vspace*{-1mm}
 \rule{\textwidth}{3pt}\par
 \vspace*{3mm}
-\raggedright \textbf{\textsf{\VK@title}}\par
+\raggedright \textbf{\textsf{\uis@title}}\par
 \vspace*{1mm}
 \rule{\textwidth}{1pt}\par
 \vspace*{1mm}
-\textsf{\VK@mainfontsize{\VK@thesistype{} - \VK@specialization{} - \VK@date}}
-\hfill\textsf{\VK@restricted}
+\textsf{\uis@mainfontsize{\uis@thesistype{} - \uis@specialization{} - \uis@date}}
+\hfill\textsf{\uis@restricted}
 \end{minipage}
 \end{minipage}
 %
@@ -286,30 +263,3 @@
 \restoregeometry % restores the geometry
 \nopagecolor     % restore the color pages to white
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
