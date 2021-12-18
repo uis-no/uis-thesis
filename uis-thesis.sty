@@ -41,9 +41,16 @@
 % TODO Known problem: date/month always follows the defined main langauge of the document
 % TODO The translation package seems to override nynorsk or norsk, whichever is defined last
 
-\DeclareOption{photo}{\newcommand{\wordcolour}{sharelatexcolour}}
+\newif\if@withphoto\@withphotofalse
+\DeclareOption{photo}{\@withphototrue}
 \DeclareOption*{\PackageWarning{uis-thesis}{Unknown ‘\CurrentOption’}}
 \ProcessOptions\relax
+
+% Bottom part of frontpage is an empty minipage with ~, unless the photo option is specified.
+\newcommand{\bottompart}{~}
+\if@withphoto
+  \renewcommand{\bottompart}{\includegraphics[width=\textwidth,trim=5cm 0cm 0cm 5cm]{photos/\VK@photo}}
+\fi
 
 % Redefine \pagecolor to define \thepagecolor for getting the current page color.
 % This is used to invert the colorbox text for the \access macro.
@@ -130,7 +137,7 @@
 \DeclareTranslation{English}{imf}{Department of Mathematics and Physics}
 \DeclareTranslation{Norsk}  {imf}{Institutt for matematikk og fysikk}
 
-%TODO english imbm is too long ; decide what to do
+%TODO english imbm is too long ; decide what to do; autoscale font size??
 \DeclareTranslationFallback {imbm}{Department of Mechanical and Structural Engineering and Materials Science}
 \DeclareTranslation{English}{imbm}{Department of Mechanical and Structural Engineering and Materials Science}
 \DeclareTranslation{Norsk}  {imbm}{Institutt for maskin, bygg og materialteknologi}
@@ -236,19 +243,14 @@
 \hfill\textsf{\VK@access}
 \end{minipage}
 \end{minipage}
-
-% \noindent
-% \colorbox{uis8}{
-% \begin{minipage}[l][0.64\paperheight][c]{\textwidth}
-% ~
-% \end{minipage}}
-
+%
 \vfill
 \noindent
+\colorbox{uis8}{
 \begin{minipage}[l][0.64\paperheight][b]{\textwidth}
-\includegraphics[width=\textwidth,trim=5cm 0cm 0cm 5cm]{photos/\VK@photo}
-\end{minipage}
-
+\bottompart
+\end{minipage}}
+%
 \end{titlepage}
 \restoregeometry % restores the geometry
 \nopagecolor     % restore the color pages to white
