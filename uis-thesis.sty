@@ -25,16 +25,18 @@
 \RequirePackage{xcolor}
 \RequirePackage{graphicx}
 \RequirePackage{fontspec}
+\RequirePackage{setspace}
 
 % TODO check if Tahoma is available on Linux and Overleaf?
 % Tahoma is a Microsoft font and is available on macOS and Windows.
-\newfontface\mainfont{Tahoma}
-\newfontface\authorfont{Tahoma Bold}
-\newfontface\titlefont[Scale=1.5]{Tahoma Bold}
+\newfontfamily\mainfont{Tahoma}
+\newfontfamily\authorfont{Tahoma Bold}
+\newfontfamily\titlefont[Scale=1.5]{Tahoma Bold}
 
 % TODO Find department specific photos to use.
 % TODO The translation package seems to override nynorsk or norsk, whichever is defined last
-% TODO Fix Tahoma line spacing
+% TODO Fix white border around whole page
+% TODO Fix titlebox placement on single color versions: below logo
 
 \newif\if@withphoto\@withphotofalse
 \DeclareOption{photo}{\@withphototrue}
@@ -58,6 +60,8 @@
 \definecolor{uis7}{cmyk}{0.37,0.15,0.00,0.00} % UIS blå lys 658
 \definecolor{uis8}{cmyk}{0.00,0.50,1.00,0.00} % UiS orange lys 137
 \definecolor{uis9}{cmyk}{0.00,0.02,0.07,0.08} % UiS lysegrå WG1
+
+% TODO reorder the naming to be more logical blue with blue
 
 \def\uis@color@top{}
 \def\uis@color@bot{}
@@ -149,6 +153,32 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
   \colorbox{\uis@color@text}{\textcolor{\uis@color@top}{{\mainfont \GetTranslation{access}}}}}
 }
 
+\def\uis@logobox{%
+\begin{minipage}[t]{0.15\textwidth}
+\vspace{0pt} % necessary for top alignment
+\includegraphics[width=\textwidth]{\uis@logofile}
+\end{minipage}
+}
+
+\def\uis@titlebox{%
+\begin{minipage}[t]{0.72\textwidth}
+\vspace{0pt} % necessary for top alignment
+\color{\uis@color@text}
+\MakeUppercase \uis@authors\par
+\MakeUppercase \uis@faculty         % no \par here since it can be excluded
+\MakeUppercase \uis@department\par
+\vspace*{-1mm}
+\rule{\textwidth}{3pt}\par
+\vspace*{4mm}
+\begin{spacing}{1.5}
+\raggedright \uis@title\par
+\end{spacing}
+\rule{\textwidth}{1pt}\par
+\vspace*{1mm}
+\uis@thesistype{} - \uis@specialization{} - \uis@date{} \hfill \uis@restricted
+\end{minipage}
+}
+
 % ----------------------------------------------------------------------------
 % Define translations
 % ----------------------------------------------------------------------------
@@ -227,33 +257,13 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 \begin{titlepage}
 \newgeometry{margin=0cm} %defines the geometry for the titlepage
 \pagecolor{\uis@color@top}
-% \noindent X\dotfill X % for seeing the line width
-
 \noindent
 \begin{minipage}[c][\topheight][t]{\textwidth}
 \vspace*{2cm}
 \hspace*{6mm}
-\begin{minipage}[t]{0.15\textwidth}
-\vspace{0pt} % necessary for top alignment
-\includegraphics[width=\textwidth]{\uis@logofile}
-\end{minipage}
+\uis@logobox
 \hspace*{6mm}
-%
-\begin{minipage}[t]{0.73\textwidth}
-\color{\uis@color@text}
-\vspace{0pt} % necessary for top alignment
-\MakeUppercase \uis@authors\par
-\MakeUppercase \uis@faculty         % no \par here since it can be excluded
-\MakeUppercase \uis@department\par
-\vspace*{-1mm}
-\rule{\textwidth}{3pt}\par
-\vspace*{3mm}
-\raggedright \uis@title\par
-\vspace*{1mm}
-\rule{\textwidth}{1pt}\par
-\vspace*{1mm}
-\uis@thesistype{} - \uis@specialization{} - \uis@date{} \hfill \uis@restricted
-\end{minipage}
+\uis@titlebox
 \end{minipage}
 %
 \vfill
