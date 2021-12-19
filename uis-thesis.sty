@@ -24,19 +24,15 @@
 \RequirePackage{geometry}
 \RequirePackage{xcolor}
 \RequirePackage{graphicx}
-\RequirePackage[useregional,calc]{datetime2}
+\RequirePackage{fontspec}
 
 % TODO check if Tahoma is available on Linux and Overleaf?
 % Tahoma is a Microsoft font and is available on macOS and Windows.
-\RequirePackage{fontspec}
-\setmainfont{Tahoma}
-
-% \RequirePackage[familydefault]{Rosario}
-% \RequirePackage[light,condensed]{roboto}
-% \RequirePackage[T1]{fontenc}
+\newfontface\mainfont{Tahoma}
+\newfontface\authorfont{Tahoma Bold}
+\newfontface\titlefont[Scale=1.5]{Tahoma Bold}
 
 % TODO Find department specific photos to use.
-% TODO Known problem: date/month always follows the defined main langauge of the document
 % TODO The translation package seems to override nynorsk or norsk, whichever is defined last
 % TODO Fix Tahoma line spacing
 
@@ -45,14 +41,17 @@
 \DeclareOption*{\PackageWarning{uis-thesis}{Unknown ‘\CurrentOption’}}
 \ProcessOptions\relax
 
+\newlength{\topheight}
+\newlength{\bottomheight}
+\setlength{\topheight}{0.35\paperheight}
+\setlength{\bottomheight}{0.64\paperheight}
+
+% TODO rewrite this to be \def\uis@ etc
 % Bottom part of frontpage is an empty minipage with ~, unless the photo option is specified.
 \newcommand{\bottompart}{~}
 \if@withphoto
   \renewcommand{\bottompart}{\includegraphics[width=\textwidth,trim=5cm 0cm 0cm 5cm]{photos/\uis@photo}}
 \fi
-
-% 30 cm ; 19.2 cm: ratio: 0.64 TODO Define this as a length or something that can be used in the code
-
 
 % ----------------------------------------------------------------------------
 % Define UiS allowed front page colors and related variables and macros
@@ -95,7 +94,9 @@
 }
 
 \def\uis@restricted{}
-\def\restricted{\def\uis@restricted{\colorbox{\uis@color@text}{\textcolor{\uis@color@top}{\GetTranslation{access}}}}}
+\def\restricted{\def\uis@restricted{%
+  \colorbox{\uis@color@text}{\textcolor{\uis@color@top}{{\mainfont \GetTranslation{access}}}}}
+}
 
 % ----------------------------------------------------------------------------
 % Declare variables and macros
@@ -105,17 +106,20 @@
 \def\uis@photo{}
 \def\photo#1{\def\uis@photo{#1}}
 
-\def\uis@mainfontsize#1{{\fontsize{12pt}{14pt}\selectfont #1}}
-\def\uis@titlefontsize#1{{\fontsize{20pt}{28pt}\selectfont #1}}
-
 \def\uis@organization{}
 \def\organization#1{\def\uis@organization{#1}}
+
 \def\uis@faculty{}
-\def\faculty#1{\def\uis@faculty{\uis@mainfontsize{\GetTranslation{#1}}}}
+\def\faculty#1{
+  \IfTranslation{\languagename}{#1}{
+    \def\uis@faculty{{\mainfont \GetTranslation{#1}}\par}
+  }{}
+}
+
 \def\uis@department{}
 \def\department#1{
   \IfTranslation{\languagename}{#1}{
-    \def\uis@department{\uis@mainfontsize{\GetTranslation{#1}}}
+    \def\uis@department{{\mainfont \GetTranslation{#1}}}
     \ifx\uis@photo#1\else\photo{#1}\fi
   }{
     \PackageError{uis-thesis}{Unknown thesis type ‘#1’}{Legal departments: ide, imf, imbm, ikbm, ier, iep, isøp}
@@ -123,15 +127,24 @@
 }
 
 \def\uis@title{}
-\def\title#1{\def\uis@title{\uis@titlefontsize{#1}}}
+\def\title#1{\def\uis@title{{\titlefont #1}}}
 \def\uis@authors{}
-\def\authors#1{\def\uis@authors{\uis@mainfontsize{#1}}}
-\def\uis@date{\DTMsavenow{uistoday}\DTMMonthname{\DTMfetchmonth{uistoday}} \DTMfetchyear{uistoday}}
+\def\authors#1{\def\uis@authors{{\authorfont #1}}}
+
+\def\uis@date{{\mainfont \ifcurrentbaselanguage{Norsk}{%
+  \ifcase\month\relax\or
+Januar\or Februar\or Mars\or April\or Mai\or Juni\or Juli\or August\or September\or Oktober\or November\or Desember
+\fi\number\year%
+}{%
+  \ifcase\month\relax\or
+January\or February\or March\or April\or May \or June\or July\or August\or September\or October\or November\or December
+\fi\number\year
+}}}
 
 \def\uis@thesistype{}
 \def\thesistype#1{
   \IfTranslation{\languagename}{#1}{
-    \def\uis@thesistype{\GetTranslation{#1}}
+    \def\uis@thesistype{{\mainfont \GetTranslation{#1}}}
   }{
     \PackageError{uis-thesis}{Unknown thesis type ‘#1’}{Legal thesis types: bachelor, master, phd}
   }
@@ -140,7 +153,7 @@
 \def\uis@specialization{}
 \def\specialization#1{
   \IfTranslation{\languagename}{#1}{
-    \def\uis@specialization{\GetTranslation{#1}}
+    \def\uis@specialization{{\mainfont \GetTranslation{#1}}}
   }{
     \PackageError{uis-thesis}{Unknown specialization ‘#1’}{Legal specializations: cs, ds, ee, medtek}
   }
@@ -225,7 +238,7 @@
 % \noindent X\dotfill X % for seeing the line width
 
 \noindent
-\begin{minipage}[c][0.34\paperheight][t]{\textwidth}
+\begin{minipage}[c][\topheight][t]{\textwidth}
 \vspace*{2cm}
 \hspace*{6mm}
 \begin{minipage}[t]{0.15\textwidth}
@@ -237,25 +250,24 @@
 \begin{minipage}[t]{0.73\textwidth}
 \color{\uis@color@text}
 \vspace{0pt} % necessary for top alignment
-\textbf{\textsf{\MakeUppercase \uis@authors}}\par
-\ifx\uis@e\uis@faculty\else\textsf{\MakeUppercase \uis@faculty}\par\fi
-\textsf{\MakeUppercase \uis@department}\par
+\MakeUppercase \uis@authors\par
+\MakeUppercase \uis@faculty         % no \par here since it can be excluded
+\MakeUppercase \uis@department\par
 \vspace*{-1mm}
 \rule{\textwidth}{3pt}\par
 \vspace*{3mm}
-\raggedright \textbf{\textsf{\uis@title}}\par
+\raggedright \uis@title\par
 \vspace*{1mm}
 \rule{\textwidth}{1pt}\par
 \vspace*{1mm}
-\textsf{\uis@mainfontsize{\uis@thesistype{} - \uis@specialization{} - \uis@date}}
-\hfill\textsf{\uis@restricted}
+\uis@thesistype{} - \uis@specialization{} - \uis@date{} \hfill \uis@restricted
 \end{minipage}
 \end{minipage}
 %
 \vfill
 \noindent
 \colorbox{\uis@color@bot}{
-\begin{minipage}[l][0.64\paperheight][b]{\textwidth}
+\begin{minipage}[l][\bottomheight][b]{\textwidth}
 \bottompart
 \end{minipage}}
 %
