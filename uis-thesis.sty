@@ -46,13 +46,6 @@
 \setlength{\topheight}{0.35\paperheight}
 \setlength{\bottomheight}{0.64\paperheight}
 
-% TODO rewrite this to be \def\uis@ etc
-% Bottom part of frontpage is an empty minipage with ~, unless the photo option is specified.
-\newcommand{\bottompart}{~}
-\if@withphoto
-  \renewcommand{\bottompart}{\includegraphics[width=\textwidth,trim=5cm 0cm 0cm 5cm]{photos/\uis@photo}}
-\fi
-
 % ----------------------------------------------------------------------------
 % Define UiS allowed front page colors and related variables and macros
 % ----------------------------------------------------------------------------
@@ -69,7 +62,7 @@
 \def\uis@color@top{}
 \def\uis@color@bot{}
 \def\uis@color@text{}
-\def\uiscolors#1{
+\def\uis@colors#1{
   \ifcase#1\relax
     \def\uis@color@top{uis7}\def\uis@color@bot{uis1}\def\uis@color@text{uis1}   \or
     \def\uis@color@top{uis9}\def\uis@color@bot{uis1}\def\uis@color@text{uis1}   \or
@@ -84,11 +77,6 @@
   \fi
 }
 
-\def\uis@restricted{}
-\def\restricted{\def\uis@restricted{%
-  \colorbox{\uis@color@text}{\textcolor{\uis@color@top}{{\mainfont \GetTranslation{access}}}}}
-}
-
 % ----------------------------------------------------------------------------
 % Declare variables and macros
 % ----------------------------------------------------------------------------
@@ -97,8 +85,15 @@
 \def\uis@photo{}
 \def\photo#1{\def\uis@photo{#1}}
 
-\def\uis@organization{}
-\def\organization#1{\def\uis@organization{#1}}
+% Unless the 'photo' package option is specified, the bottom part of
+% the frontpage is set to an empty minipage due to the ~.
+\def\uis@bottompart{~}
+\if@withphoto
+  \def\uis@bottompart{\includegraphics[width=\textwidth,trim=5cm 0cm 0cm 5cm]{photos/\uis@photo}}
+\fi
+
+\def\uis@authors{}
+\def\authors#1{\def\uis@authors{{\authorfont #1}}}
 
 \def\uis@faculty{}
 \def\faculty#1{
@@ -119,18 +114,6 @@
 
 \def\uis@title{}
 \def\title#1{\def\uis@title{{\titlefont #1}}}
-\def\uis@authors{}
-\def\authors#1{\def\uis@authors{{\authorfont #1}}}
-
-\def\uis@date{{\mainfont \ifcurrentbaselanguage{Norsk}{%
-  \ifcase\month\relax\or
-Januar\or Februar\or Mars\or April\or Mai\or Juni\or Juli\or August\or September\or Oktober\or November\or Desember
-\fi\number\year%
-}{%
-  \ifcase\month\relax\or
-January\or February\or March\or April\or May \or June\or July\or August\or September\or October\or November\or December
-\fi\number\year
-}}}
 
 \def\uis@thesistype{}
 \def\thesistype#1{
@@ -150,12 +133,29 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
   }
 }
 
+\def\uis@date{{\mainfont \ifcurrentbaselanguage{Norsk}{%
+  \ifcase\month\relax\or
+Januar\or Februar\or Mars\or April\or Mai\or Juni\or Juli\or August\or September\or Oktober\or November\or Desember
+\fi\number\year%
+}{%
+  \ifcase\month\relax\or
+January\or February\or March\or April\or May \or June\or July\or August\or September\or October\or November\or December
+\fi\number\year
+}}}
+
+% The \restricted command must only be used to indicate a report with restricted access
+\def\uis@restricted{}
+\def\restricted{\def\uis@restricted{%
+  \colorbox{\uis@color@text}{\textcolor{\uis@color@top}{{\mainfont \GetTranslation{access}}}}}
+}
+
 % ----------------------------------------------------------------------------
 % Define translations
 % ----------------------------------------------------------------------------
 \DeclareTranslationFallback {uis}{University of Stavanger}
 \DeclareTranslation{English}{uis}{University of Stavanger}
 \DeclareTranslation{Norsk}  {uis}{Universitetet i Stavanger}
+
 \DeclareTranslationFallback {tn}{Faculty of Science and Technology}
 \DeclareTranslation{English}{tn}{Faculty of Science and Technology}
 \DeclareTranslation{Norsk}  {tn}{Det teknisk-naturvitskaplege fakultet}
@@ -223,6 +223,7 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 % Macors
 % ----------------------------------------------------------------------------
 \newcommand{\uisfront}[1]{
+\uis@colors{#1}
 \begin{titlepage}
 \newgeometry{margin=0cm} %defines the geometry for the titlepage
 \pagecolor{\uis@color@top}
@@ -259,7 +260,7 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 \noindent
 \colorbox{\uis@color@bot}{
 \begin{minipage}[l][\bottomheight][b]{\textwidth}
-\bottompart
+\uis@bottompart
 \end{minipage}}
 %
 \end{titlepage}
