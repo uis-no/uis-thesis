@@ -71,24 +71,15 @@
 \def\uis@color@text{}
 \def\uiscolors#1{
   \ifcase#1\relax
-    \def\uis@color@top{uis7}\def\uis@color@bot{uis1}\def\uis@color@text{uis1}
-  \or
-    \def\uis@color@top{uis9}\def\uis@color@bot{uis1}\def\uis@color@text{uis1}
-  \or
-    \def\uis@color@top{uis8}\def\uis@color@bot{uis2}\def\uis@color@text{white}
-  \or
-    \def\uis@color@top{uis1}\def\uis@color@bot{uis1}\def\uis@color@text{white}
-  \or
-    \def\uis@color@top{uis7}\def\uis@color@bot{uis7}\def\uis@color@text{uis1}
-  \or
-    \def\uis@color@top{uis2}\def\uis@color@bot{uis2}\def\uis@color@text{white}
-  \or
-    \def\uis@color@top{uis5}\def\uis@color@bot{uis5}\def\uis@color@text{white}
-  \or
-    \def\uis@color@top{uis8}\def\uis@color@bot{uis8}\def\uis@color@text{white}
-  \or
-    \def\uis@color@top{uis3}\def\uis@color@bot{uis3}\def\uis@color@text{white}
-  \else
+    \def\uis@color@top{uis7}\def\uis@color@bot{uis1}\def\uis@color@text{uis1}   \or
+    \def\uis@color@top{uis9}\def\uis@color@bot{uis1}\def\uis@color@text{uis1}   \or
+    \def\uis@color@top{uis8}\def\uis@color@bot{uis2}\def\uis@color@text{white}  \or
+    \def\uis@color@top{uis1}\def\uis@color@bot{uis1}\def\uis@color@text{white}  \or
+    \def\uis@color@top{uis7}\def\uis@color@bot{uis7}\def\uis@color@text{uis1}   \or
+    \def\uis@color@top{uis2}\def\uis@color@bot{uis2}\def\uis@color@text{white}  \or
+    \def\uis@color@top{uis5}\def\uis@color@bot{uis5}\def\uis@color@text{white}  \or
+    \def\uis@color@top{uis8}\def\uis@color@bot{uis8}\def\uis@color@text{white}  \or
+    \def\uis@color@top{uis3}\def\uis@color@bot{uis3}\def\uis@color@text{white}  \else
     \PackageError{uis-thesis}{Unknown color theme ID ‘#1’}{Legal values: 0-8}
   \fi
 }
