@@ -21,7 +21,7 @@
 \typeout{(c) 2021 Hein Meling}
 
 \RequirePackage{translations}
-\RequirePackage{geometry}
+\RequirePackage{geometry}  % use showframe option to debug
 \RequirePackage{xcolor}
 \RequirePackage{graphicx}
 \RequirePackage{fontspec}
@@ -29,24 +29,18 @@
 
 % TODO check if Tahoma is available on Linux and Overleaf?
 % Tahoma is a Microsoft font and is available on macOS and Windows.
-\newfontfamily\mainfont{Tahoma}
+\newfontfamily\mainfont[Scale=0.95]{Tahoma}
 \newfontfamily\authorfont{Tahoma Bold}
 \newfontfamily\titlefont[Scale=1.5]{Tahoma Bold}
 
 % TODO Find department specific photos to use.
 % TODO The translation package seems to override nynorsk or norsk, whichever is defined last
-% TODO Fix white border around whole page
 % TODO Fix titlebox placement on single color versions: below logo
 
 \newif\if@withphoto\@withphotofalse
 \DeclareOption{photo}{\@withphototrue}
 \DeclareOption*{\PackageWarning{uis-thesis}{Unknown ‘\CurrentOption’}}
 \ProcessOptions\relax
-
-\newlength{\topheight}
-\newlength{\bottomheight}
-\setlength{\topheight}{0.35\paperheight}
-\setlength{\bottomheight}{0.64\paperheight}
 
 % ----------------------------------------------------------------------------
 % Define UiS allowed front page colors and related variables and macros
@@ -66,6 +60,7 @@
 \def\uis@color@text{}
 \def\uis@colors#1{
   \ifcase#1\relax
+    \def\uis@color@top{white}\def\uis@color@bot{white}\def\uis@color@text{black}  \or
     \def\uis@color@top{uis-blue-lite}\def\uis@color@bot{uis-blue-dark}\def\uis@color@text{uis-blue-dark}   \or
     \def\uis@color@top{uis-warm-gray}\def\uis@color@bot{uis-blue-dark}\def\uis@color@text{uis-blue-dark}   \or
     \def\uis@color@top{uis-oran-lite}\def\uis@color@bot{uis-oran-dark}\def\uis@color@text{white}  \or
@@ -159,7 +154,7 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 }
 
 \def\uis@titlebox{%
-\begin{minipage}[t]{0.72\textwidth}
+\begin{minipage}[t]{0.76\textwidth}
 \vspace{0pt} % necessary for top alignment
 \color{\uis@color@text}
 \MakeUppercase \uis@authors\par
@@ -167,10 +162,11 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 \MakeUppercase \uis@department\par
 \vspace*{-1mm}
 \rule{\textwidth}{3pt}\par
-\vspace*{4mm}
+\vspace*{3mm}
 \begin{spacing}{1.5}
 \raggedright \uis@title\par
 \end{spacing}
+\vspace*{-2mm}
 \rule{\textwidth}{1pt}\par
 \vspace*{1mm}
 \uis@thesistype{} - \uis@specialization{} - \uis@date{} \hfill \uis@restricted
@@ -248,12 +244,45 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 \DeclareTranslation{Norsk}  {med}{Medisinsk teknologi}
 
 % ----------------------------------------------------------------------------
-% Macors
+% Predefined lengths
+% ----------------------------------------------------------------------------
+\newlength{\topheight}
+\newlength{\bottomheight}
+\newlength{\logoadjust}
+% \setlength{\logoadjust}{-3.2mm} % aligned with colorbox
+\setlength{\logoadjust}{-8mm} % into white border
+\setlength{\topheight}{0.34\paperheight}
+\setlength{\bottomheight}{0.5735\paperheight}
+
+% ----------------------------------------------------------------------------
+% Main macro
 % ----------------------------------------------------------------------------
 \newcommand{\uisfront}[1]{
+\uis@colors{#1}              % select color scheme
+\begin{titlepage}
+\newgeometry{margin=10mm}    % defines the geometry for the titlepage
+{\setlength{\parindent}{0cm} % turn off indent in this group
+\colorbox{\uis@color@top}{
+\begin{minipage}[l][\topheight][t]{.984\textwidth}
+\vspace*{17mm}
+\hspace*{\logoadjust}
+\uis@logobox
+\hspace*{10mm}
+\uis@titlebox
+\end{minipage}}\\[-2pt]
+\colorbox{\uis@color@bot}{
+\begin{minipage}[l][\bottomheight][b]{.984\textwidth}
+\uis@bottompart
+\end{minipage}}}
+\end{titlepage}
+\restoregeometry % restores the geometry
+}
+
+% TODO Old version: to be removed
+\newcommand{\uisfrontx}[1]{
 \uis@colors{#1}
 \begin{titlepage}
-\newgeometry{margin=0cm} %defines the geometry for the titlepage
+\newgeometry{margin=0cm} % defines the geometry for the titlepage
 \pagecolor{\uis@color@top}
 \noindent
 \begin{minipage}[c][\topheight][t]{\textwidth}
