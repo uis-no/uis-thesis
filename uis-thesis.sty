@@ -279,32 +279,47 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 \newlength{\bottomheight}
 \newlength{\logoadjust}
 \newlength{\logosep}
+\newlength{\printsep}
 \if@printlogo
-  \setlength{\logoadjust}{-3.2mm} % aligned with colorbox
+  % align logo with colorbox for printing
+  \setlength{\logoadjust}{-3.2mm}
+  % \logosep when in print mode
+  \setlength{\printsep}{36mm}
 \else
-% \setlength{\logoadjust}{-8mm} % halfway into white border
-  \setlength{\logoadjust}{-14mm} % fully into white border
+  % place logo at the page's edge
+  \setlength{\logoadjust}{-14mm}
+  % \logosep when in non-print mode
+  \setlength{\printsep}{25mm}
 \fi
+
+\def\uis@unicolor{
+  \setlength{\topheight}{0.911\paperheight}
+  \setlength{\bottomheight}{0pt}
+  \setlength{\logosep}{\printsep}
+  \def\uis@par{\par}
+}
+
+\def\uis@splitcolor{
+  \setlength{\topheight}{0.34\paperheight}
+  \setlength{\bottomheight}{0.575\paperheight}
+  \setlength{\logosep}{8mm}
+  \def\uis@par{}       % no \par after logo in this mode
+}
+
+\def\uis@photocover{\uis@splitcolor} % same as splitcolor
 
 % ----------------------------------------------------------------------------
 % Main macro
 % ----------------------------------------------------------------------------
 \newcommand{\uiscover}[1]{
 \uis@colors{#1}              % select color scheme
-\ifnum #1 > 3 
-  % unicolor mode
-  \setlength{\topheight}{0.911\paperheight}
-  \setlength{\bottomheight}{0pt}
-  \setlength{\logosep}{31mm}
-  \def\uis@par{\par}
+\if@withphoto
+  \uis@photocover
 \else
-  % split color mode
-  \setlength{\topheight}{0.34\paperheight}
-  \setlength{\bottomheight}{0.575\paperheight}
-  \setlength{\logosep}{8mm}
-  \def\uis@par{}       % no \par in this mode
+  \ifnum #1 > 3 \uis@unicolor
+  \else         \uis@splitcolor
+  \fi
 \fi
-
 \begin{titlepage}
 \newgeometry{margin=10mm}    % defines the geometry for the titlepage
 {\setlength{\parindent}{0cm} % turn off indent in this group

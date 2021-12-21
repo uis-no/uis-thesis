@@ -75,8 +75,6 @@ Support for `nynorsk` is not working yet (see known issues below).
 
 ## Known Issues
 
-- Should allow photo on all color schemes; currently only 1-3 allows photo
-
 - The translation package seems to override nynorsk or norsk, whichever is defined last
 
 ## Thanks and Contributions
