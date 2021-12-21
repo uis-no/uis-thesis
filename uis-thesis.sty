@@ -32,7 +32,7 @@
 
 % TODO check if Tahoma is available on Linux and Overleaf?
 % Tahoma is a Microsoft font and is available on macOS and Windows.
-\newfontfamily\mainfont[Scale=0.95]{Tahoma}
+\newfontfamily\mainfont[Scale=0.9]{Tahoma}
 \newfontfamily\authorfont{Tahoma Bold}
 \newfontfamily\titlefont[Scale=1.5]{Tahoma Bold}
 
@@ -181,7 +181,7 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 }
 
 \def\uis@titlebox{%
-\begin{minipage}[t]{0.76\textwidth}
+\begin{minipage}[t]{0.795\textwidth}
 \vspace{0pt} % necessary for top alignment
 \color{\uis@color@text}
 \MakeUppercase \uis@authors\par
@@ -289,13 +289,13 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
   % unicolor mode
   \setlength{\topheight}{0.911\paperheight}
   \setlength{\bottomheight}{0pt}
-  \setlength{\logosep}{33mm}
+  \setlength{\logosep}{31mm}
   \def\uis@par{\par}
 \else
   % split color mode
   \setlength{\topheight}{0.34\paperheight}
   \setlength{\bottomheight}{0.575\paperheight}
-  \setlength{\logosep}{10mm}
+  \setlength{\logosep}{8mm}
   \def\uis@par{}       % no \par in this mode
 \fi
 
