@@ -59,7 +59,7 @@ The following package options are currently supported:
 | `photo` | Use photo; department specific photos are used by default |
 | `print` | Adjust logo placement to facilitate printing              |
 
-**Example: ** Prepare cover page with photo placed in `photos/cern`.
+**Example:** Prepare cover page with photo placed in `photos/cern`.
 The usual image file types are supported.
 
 ```latex
