@@ -26,6 +26,9 @@
 \RequirePackage{graphicx}
 \RequirePackage{fontspec}
 \RequirePackage{setspace}
+\RequirePackage{adjustbox}
+\RequirePackage{calc}
+\RequirePackage{ifthen}
 
 % TODO check if Tahoma is available on Linux and Overleaf?
 % Tahoma is a Microsoft font and is available on macOS and Windows.
@@ -35,7 +38,6 @@
 
 % TODO Find department specific photos to use.
 % TODO The translation package seems to override nynorsk or norsk, whichever is defined last
-% TODO Fix titlebox placement on single color versions: below logo
 
 \newif\if@withphoto\@withphotofalse
 \DeclareOption{photo}{\@withphototrue}
@@ -60,7 +62,7 @@
 \def\uis@color@text{}
 \def\uis@colors#1{
   \ifcase#1\relax
-    \def\uis@color@top{white}\def\uis@color@bot{white}\def\uis@color@text{black}  \or
+    \def\uis@color@top{uis-blue-lite}\def\uis@color@bot{uis-blue-dark}\def\uis@color@text{uis-blue-dark}   \or
     \def\uis@color@top{uis-blue-lite}\def\uis@color@bot{uis-blue-dark}\def\uis@color@text{uis-blue-dark}   \or
     \def\uis@color@top{uis-warm-gray}\def\uis@color@bot{uis-blue-dark}\def\uis@color@text{uis-blue-dark}   \or
     \def\uis@color@top{uis-oran-lite}\def\uis@color@bot{uis-oran-dark}\def\uis@color@text{white}  \or
@@ -69,7 +71,8 @@
     \def\uis@color@top{uis-oran-dark}\def\uis@color@bot{uis-oran-dark}\def\uis@color@text{white}  \or
     \def\uis@color@top{uis-oran-medi}\def\uis@color@bot{uis-oran-medi}\def\uis@color@text{white}  \or
     \def\uis@color@top{uis-oran-lite}\def\uis@color@bot{uis-oran-lite}\def\uis@color@text{white}  \or
-    \def\uis@color@top{uis-red-brown}\def\uis@color@bot{uis-red-brown}\def\uis@color@text{white}  \else
+    \def\uis@color@top{uis-red-brown}\def\uis@color@bot{uis-red-brown}\def\uis@color@text{white}  \or
+    \def\uis@color@top{white}\def\uis@color@bot{white}\def\uis@color@text{black}  \else
     \PackageError{uis-thesis}{Unknown color theme ID ‘#1’}{Legal values: 0-8}
   \fi
 }
@@ -82,11 +85,35 @@
 \def\uis@photo{}
 \def\photo#1{\def\uis@photo{#1}}
 
+\newlength{\oH}
+\newlength{\oW}
+\newlength{\rH}
+\newlength{\rW}
+\newlength{\cH}
+\newlength{\cW}
+\newcommand\ClipImage[3]{% width, height, image
+\settototalheight{\oH}{\includegraphics{#3}}%
+\settowidth{\oW}{\includegraphics{#3}}%
+\setlength{\rH}{\oH * \ratio{#1}{\oW}}%
+\setlength{\rW}{\oW * \ratio{#2}{\oH}}%
+\ifthenelse{\lengthtest{\rH < #2}}{%
+    \setlength{\cW}{(\rW-#1)*\ratio{\oH}{#2}}%
+    \adjincludegraphics[height=#2,clip,trim=0 0 \cW{} 0]{#3}%
+}{%
+    \setlength{\cH}{(\rH-#2)*\ratio{\oW}{#1}}%
+    \adjincludegraphics[width=#1,clip,trim=0 \cH{} 0 0]{#3}%
+}%
+}
+
 % Unless the 'photo' package option is specified, the bottom part of
 % the frontpage is set to an empty minipage due to the ~.
 \def\uis@bottompart{~}
 \if@withphoto
-  \def\uis@bottompart{\includegraphics[width=\textwidth,trim=5cm 0cm 0cm 5cm]{photos/\uis@photo}}
+  \def\uis@bottompart{
+  \hspace*{-2.9mm}
+  \vspace*{-3mm}
+  \ClipImage{1.017\textwidth}{1.03\bottomheight}{photos/\uis@photo}
+  }
 \fi
 
 \def\uis@authors{}
@@ -249,16 +276,29 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 \newlength{\topheight}
 \newlength{\bottomheight}
 \newlength{\logoadjust}
+\newlength{\logosep}
 % \setlength{\logoadjust}{-3.2mm} % aligned with colorbox
 \setlength{\logoadjust}{-8mm} % into white border
-\setlength{\topheight}{0.34\paperheight}
-\setlength{\bottomheight}{0.5735\paperheight}
 
 % ----------------------------------------------------------------------------
 % Main macro
 % ----------------------------------------------------------------------------
 \newcommand{\uisfront}[1]{
 \uis@colors{#1}              % select color scheme
+\ifnum #1 > 3 
+  % unicolor mode
+  \setlength{\topheight}{0.911\paperheight}
+  \setlength{\bottomheight}{0pt}
+  \setlength{\logosep}{33mm}
+  \def\uis@par{\par}
+\else
+  % split color mode
+  \setlength{\topheight}{0.34\paperheight}
+  \setlength{\bottomheight}{0.575\paperheight}
+  \setlength{\logosep}{10mm}
+  \def\uis@par{}       % no \par in this mode
+\fi
+
 \begin{titlepage}
 \newgeometry{margin=10mm}    % defines the geometry for the titlepage
 {\setlength{\parindent}{0cm} % turn off indent in this group
@@ -266,8 +306,8 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 \begin{minipage}[l][\topheight][t]{.984\textwidth}
 \vspace*{17mm}
 \hspace*{\logoadjust}
-\uis@logobox
-\hspace*{10mm}
+\uis@logobox\uis@par
+\hspace*{\logosep}
 \uis@titlebox
 \end{minipage}}\\[-2pt]
 \colorbox{\uis@color@bot}{
@@ -276,31 +316,4 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 \end{minipage}}}
 \end{titlepage}
 \restoregeometry % restores the geometry
-}
-
-% TODO Old version: to be removed
-\newcommand{\uisfrontx}[1]{
-\uis@colors{#1}
-\begin{titlepage}
-\newgeometry{margin=0cm} % defines the geometry for the titlepage
-\pagecolor{\uis@color@top}
-\noindent
-\begin{minipage}[c][\topheight][t]{\textwidth}
-\vspace*{2cm}
-\hspace*{6mm}
-\uis@logobox
-\hspace*{6mm}
-\uis@titlebox
-\end{minipage}
-%
-\vfill
-\noindent
-\colorbox{\uis@color@bot}{
-\begin{minipage}[l][\bottomheight][b]{\textwidth}
-\uis@bottompart
-\end{minipage}}
-%
-\end{titlepage}
-\restoregeometry % restores the geometry
-\nopagecolor     % restore the color pages to white
 }
