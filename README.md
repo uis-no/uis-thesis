@@ -29,38 +29,41 @@ See the `example.tex` file for additional details.
 \end{document}
 ```
 
-### Package Commands
-
-The package supports the following commands:
-
-| Command           | Description                                                    |
-|-------------------|----------------------------------------------------------------|
-| `\title`          | May use `\\` to force line breaks                              |
-| `\authors`        | Multiple authors should be separate with `,` and `and`         |
-| `\department`     | Lower case department abbreviations, e.g., `ide` and `imbm`    |
-| `\thesistype`     | Supported: `bachelor`, `master`, and `phd`                     |
-| `\specialization` | Only `cs, ds, ee, med` supported. More can be added            |
-| `\photo`          | Specifies name of photo in photos folder                       |
-| `\uiscover`       | Display cover page, values 1-9 provide different color schemes |
-
-Supported but not recommended commands:
-
-| Command           | Description                                                    |
-|-------------------|----------------------------------------------------------------|
-| `\faculty`        | Recommend to not use. Support only `tn` for now                |
-| `\restricted`     | Use to print `Restricted Access` on cover page                 |
-
 ### Package Options
 
 The following package options are currently supported:
 
-| Option  | Description                                               |
-|---------|-----------------------------------------------------------|
-| `photo` | Use photo; department specific photos are used by default |
-| `print` | Adjust logo placement to facilitate printing              |
+| Option  | Description                                                |
+|---------|------------------------------------------------------------|
+| `photo` | Use photo; department specific photos are used by default  |
+| `print` | Align logo placement with color box to facilitate printing |
 
-**Example:** Prepare cover page with photo placed in `photos/cern`.
+### Package Commands
+
+The package supports the following commands:
+
+| Command           | Description                                                       |
+|-------------------|-------------------------------------------------------------------|
+| `\title`          | May use `\\` to force line breaks                                 |
+| `\authors`        | Multiple authors should be separate with `,` and `and`            |
+| `\department`     | Lower case department abbreviations, e.g., `ide` and `imbm`       |
+| `\thesistype`     | Supported: `bachelor`, `master`, and `phd`                        |
+| `\specialization` | Currently, only `cs, ds, ee, med` are supported; more to be added |
+| `\photo`          | Specifies name of photo in photos folder                          |
+| `\uiscover`       | Display cover page, values 1-9 provide different color schemes    |
+| `\faculty`        | Currently, only `tn` is supported                                 |
+| `\restricted`     | Use to print `Restricted Access` on cover page                    |
+
+_I recommend to use only one of `\department` and `\faculty` to avoid overloading the page with information._
+Typically, `bachelor` and `master` thesis types should use `\department`, while the `phd` type may use `\faculty`.
+
+If you specify the `photo` package option, the default is to use a department specific photo.
+For example, for `ide` a photo named `photos/ide` will be used.
+
+If you want to use your own photo, for example a photo of your system, simply place the photo in the `photos` folder and specify the photo name using the `\photo` command.
 The usual image file types are supported.
+
+**Example:** Cover page with a photo placed in `photos/cern`.
 
 ```latex
 \usepackage[photo]{uis-thesis}
