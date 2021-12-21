@@ -57,11 +57,13 @@ The package supports the following commands:
 _I recommend to use only one of `\department` and `\faculty` to avoid overloading the page with information._
 Typically, `bachelor` and `master` thesis types should use `\department`, while the `phd` type may use `\faculty`.
 
-If you specify the `photo` package option, the default is to use a department specific photo.
-For example, for `ide` a photo named `photos/ide` will be used.
+#### Photos on Cover Page
 
-If you want to use your own photo, for example a photo of your system, simply place the photo in the `photos` folder and specify the photo name using the `\photo` command.
-The usual image file types are supported.
+- If you specify the `photo` package option, the default is to use a department specific photo.
+  For example, for `ide` a photo named `photos/ide` will be used.
+
+- If you want to use your own photo, for example a photo of your system, simply place the photo in the `photos` folder and specify the photo name using the `\photo` command.
+  The usual image file types are supported.
 
 **Example:** Cover page with a photo placed in `photos/cern`.
 
