@@ -14,7 +14,8 @@ See the `example.tex` file for additional details.
 \usepackage[american]{babel}
 \usepackage{uis-thesis}
 
-\setmainfont{Georgia}
+% Optional: UiS recommended font for body text
+% \setmainfont{Georgia}
 
 \title{New Directions for Machine-verifiable\\ Progress Credentials with Application to Academic Credentials}
 \authors{Hein Meling}
@@ -27,6 +28,17 @@ See the `example.tex` file for additional details.
 \begin{document}
 \uiscover{1}
 \end{document}
+```
+
+## Compiling
+
+Unfortunately, due to font requirements it is not possible to compile using `pdflatex`.
+Instead you can use the `xelatex` or `lualatex` engines.
+I'm not aware of any problems using these alternatives over `pdflatex`, but please report any issues in the issue tracker.
+The default engine on Overleaf is `xelatex`.
+
+```shell
+> xelatex example
 ```
 
 ### Package Options
@@ -81,6 +93,10 @@ Support for `nynorsk` is not working yet (see known issues below).
 ## Known Issues
 
 - The translation package seems to override nynorsk or norsk, whichever is defined last
+
+- Logos are missing from the repository; I hope to add the logos soon
+
+- Default photos are missing from the repository; I hope to add relevant photos soon
 
 ## Thanks and Contributions
 
