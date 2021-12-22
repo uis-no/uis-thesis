@@ -38,7 +38,7 @@ I'm not aware of any problems using these alternatives over `pdflatex`, but plea
 The default engine on Overleaf is `xelatex`.
 
 ```shell
-> xelatex example
+xelatex example
 ```
 
 ### Package Options
@@ -90,6 +90,19 @@ The template supports both `norsk` and any variant of `english`.
 You can specify the language as an option to the `bable` package or in the `\documentclass`.
 Support for `nynorsk` is not working yet (see known issues below).
 
+## Installing Fonts (Linux)
+
+The cover page requires the Tahoma font, which comes preinstalled on macOS and Windows.
+However, for Linux you may need to install the Tahoma font:
+
+On Arch Linux:
+
+```shell
+yay -S ttf-tahoma
+```
+
+For Ubuntu, see this thread on [askubuntu.com](https://askubuntu.com/questions/438670/install-tahoma-font-in-ubuntu).
+
 ## Known Issues
 
 - The translation package seems to override nynorsk or norsk, whichever is defined last
@@ -105,3 +118,5 @@ Support for `nynorsk` is not working yet (see known issues below).
 - Resources for graphical profile and templates [UiS internal link](https://liveuis.sharepoint.com/sites/Arbeidsstoette/SitePages/Grafisk-profil-UiS.aspx)
 
 - Thanks to Susanna King for help and guidance with preparing this template
+
+- Thanks to Rodrigo Saramago for testing on Linux and providing font instructions
