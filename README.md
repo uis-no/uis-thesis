@@ -27,16 +27,17 @@ See the `example.tex` file for additional details.
 % Optional: UiS recommended font for body text
 % \setmainfont{Georgia}
 
-\title{New Directions for Machine-verifiable\\ Progress Credentials with Application to Academic Credentials}
+\title{New Directions in Machine-verifiable\\ Progress Credentials and Fully Automated and Transparent Admissions Process}
 \authors{Hein Meling}
 \department{ide}
-% Optional if photo option used: specify name of photo in photos folder
+% Optional: if photo option used, specify name of photo in photos folder
 % \photo{cern}
 \thesistype{master}
 \specialization{cs}
 
 \begin{document}
 \uiscover{1}
+\uisbackcover
 \end{document}
 ```
 
@@ -73,11 +74,13 @@ The package supports the following commands:
 | `\specialization` | Currently, only `cs, ds, ee, med` are supported; more to be added |
 | `\photo`          | Specifies name of photo in photos folder                          |
 | `\uiscover`       | Display cover page, values 1-9 provide different color schemes    |
+| `\uisbackcover`   | Display back cover using the same color schemes as front cover    |
 | `\faculty`        | Currently, only `tn` is supported                                 |
 | `\restricted`     | Use to print `Restricted Access` on cover page                    |
 
-_I recommend to use only one of `\department` and `\faculty` to avoid overloading the page with information._
-Typically, `bachelor` and `master` thesis types should use `\department`, while the `phd` type may use `\faculty`.
+_I recommend to use only one of `\department` or `\faculty` to keep the page clean._
+Typically, `bachelor` and `master` thesis types should use `\department`, while the `phd` type should use `\faculty`.
+However, you can use both if you prefer.
 
 #### Photos on Cover Page
 
@@ -119,9 +122,11 @@ For Ubuntu, see this thread on [askubuntu.com](https://askubuntu.com/questions/4
 
 - Default photos are missing from the repository; I hope to add relevant photos soon
 
+- Missing credit page for photos
+
 ## Thanks and Contributions
 
-- LaTeX implementation by Hein Meling, December 2021
+- LaTeX implementation by Hein Meling, December 2021 - January 2022
 
 - Resources for graphical profile and templates [UiS internal link](https://liveuis.sharepoint.com/sites/Arbeidsstoette/SitePages/Grafisk-profil-UiS.aspx)
 

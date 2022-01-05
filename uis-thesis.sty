@@ -1,7 +1,7 @@
 %!TEX root = ./test-uis-thesis.tex
 
 %% uis-thesis.sty
-%% Copyright 2021 Hein Meling
+%% Copyright 2021-2022 Hein Meling
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -19,7 +19,7 @@
 % and example.tex.
 
 \ProvidesPackage{uis-thesis}[2021/12/17 Thesis Template for University of Stavanger]
-\typeout{(c) 2021 Hein Meling}
+\typeout{(c) 2021-2022 Hein Meling}
 
 \RequirePackage{translations}
 \RequirePackage{geometry}  % use showframe option to debug
@@ -31,14 +31,11 @@
 \RequirePackage{calc}
 \RequirePackage{ifthen}
 
-% TODO check if Tahoma is available on Linux and Overleaf?
 % Tahoma is a Microsoft font and is available on macOS and Windows.
+% See README.md for Linux font install instructions.
 \newfontfamily\mainfont[Scale=0.9]{Tahoma}
 \newfontfamily\authorfont{Tahoma Bold}
 \newfontfamily\titlefont[Scale=1.5]{Tahoma Bold}
-
-% TODO Find department specific photos to use.
-% TODO The translation package seems to override nynorsk or norsk, whichever is defined last
 
 \newif\if@withphoto\@withphotofalse
 \newif\if@printlogo\@printlogofalse
@@ -85,7 +82,9 @@
 % ----------------------------------------------------------------------------
 \def\uis@e{} % empty box to avoid blank space
 \def\uis@logofile{\ifcurrentbaselanguage{Norsk}{logo/uis-logo-no-digital}{logo/uis-logo-en-digital}}
-\def\uis@photo{}
+
+% Use 'ide.jpg' as the default photo if \department or \photo not provided
+\def\uis@photo{ide}
 \def\photo#1{\def\uis@photo{#1}}
 
 \newlength{\oH}
@@ -121,6 +120,11 @@
 
 \def\uis@authors{}
 \def\authors#1{\def\uis@authors{{\authorfont #1}}}
+
+\def\uis@isbn{}
+\def\isbn#1{\def\uis@isbn{{\mainfont ISBN: #1\\}}}
+\def\uis@issn{}
+\def\issn#1{\def\uis@issn{{\mainfont ISSN: #1\\}}}
 
 \def\uis@faculty{}
 \def\faculty#1{
@@ -163,11 +167,11 @@
 \def\uis@date{{\mainfont \ifcurrentbaselanguage{Norsk}{%
   \ifcase\month\relax\or
 Januar\or Februar\or Mars\or April\or Mai\or Juni\or Juli\or August\or September\or Oktober\or November\or Desember
-\fi\number\year%
+\fi\ \number\year%
 }{%
   \ifcase\month\relax\or
 January\or February\or March\or April\or May \or June\or July\or August\or September\or October\or November\or December
-\fi\number\year
+\fi\ \number\year
 }}}
 
 % The \restricted command must only be used to indicate a report with restricted access
@@ -200,6 +204,22 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 \rule{\textwidth}{1pt}\par
 \vspace*{1mm}
 \uis@thesistype{} - \uis@specialization{} - \uis@date{} \hfill \uis@restricted
+\end{minipage}
+}
+
+\def\uis@backbox{%
+\begin{minipage}[t]{0.795\textwidth}
+\vspace{0pt} % necessary for top alignment
+\color{\uis@color@text}
+\mainfont
+4036 Stavanger                       \\
+Tel: +47 51 83 10 00                 \\
+\GetTranslation{email}: post@uis.no  \\
+www.uis.no                           \par
+\vspace*{5mm}
+\uis@isbn
+\uis@issn
+\authorfont © \number\year\ \uis@authors\par
 \end{minipage}
 }
 
@@ -258,6 +278,9 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 \DeclareTranslation{English}{access}{Restricted Access}
 \DeclareTranslation{Nynorsk}{access}{Begrensa tilgang}
 \DeclareTranslation{Norsk}  {access}{Begrenset tilgang}
+\DeclareTranslationFallback {email}{E-mail}
+\DeclareTranslation{English}{email}{E-mail}
+\DeclareTranslation{Norsk}  {email}{E-post}
 
 \DeclareTranslationFallback {cs}{Computer Science}
 \DeclareTranslation{English}{cs}{Computer Science}
@@ -309,7 +332,7 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 \def\uis@photocover{\uis@splitcolor} % same as splitcolor
 
 % ----------------------------------------------------------------------------
-% Main macro
+% Main macros
 % ----------------------------------------------------------------------------
 \newcommand{\uiscover}[1]{
 \uis@colors{#1}              % select color scheme
@@ -334,6 +357,23 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 \colorbox{\uis@color@bot}{
 \begin{minipage}[l][\bottomheight][b]{.984\textwidth}
 \uis@bottompart
+\end{minipage}}}
+\end{titlepage}
+\restoregeometry % restores the geometry
+}
+
+\newcommand{\uisbackcover}{
+\uis@unicolor
+\begin{titlepage}
+\newgeometry{margin=10mm}    % defines the geometry for the titlepage
+{\setlength{\parindent}{0cm} % turn off indent in this group
+\colorbox{\uis@color@top}{
+\begin{minipage}[l][\topheight][t]{.984\textwidth}
+\vspace*{17mm}
+\hspace*{\logoadjust}
+\uis@logobox\uis@par
+\hspace*{\logosep}
+\uis@backbox
 \end{minipage}}}
 \end{titlepage}
 \restoregeometry % restores the geometry
