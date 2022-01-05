@@ -87,6 +87,11 @@
 \def\uis@photo{ide}
 \def\photo#1{\def\uis@photo{#1}}
 
+\def\uis@photocredit{}
+\def\photocredit#1{
+  \def\uis@photocredit{\vspace*{5mm}\uis@e\GetTranslation{photo}: #1 \par}
+}
+
 \newlength{\oH}
 \newlength{\oW}
 \newlength{\rH}
@@ -216,6 +221,7 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 Tel: +47 51 83 10 00                 \\
 \GetTranslation{email}: post@uis.no  \\
 www.uis.no                           \par
+\uis@photocredit  % no \par here since it can be excluded
 \vspace*{5mm}
 \uis@isbn
 \uis@issn
@@ -281,6 +287,9 @@ www.uis.no                           \par
 \DeclareTranslationFallback {email}{E-mail}
 \DeclareTranslation{English}{email}{E-mail}
 \DeclareTranslation{Norsk}  {email}{E-post}
+\DeclareTranslationFallback {photo}{Cover Photo}
+\DeclareTranslation{English}{photo}{Cover Photo}
+\DeclareTranslation{Norsk}  {photo}{Forside bilde}
 
 \DeclareTranslationFallback {cs}{Computer Science}
 \DeclareTranslation{English}{cs}{Computer Science}

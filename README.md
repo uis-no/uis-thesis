@@ -73,6 +73,7 @@ The package supports the following commands:
 | `\thesistype`     | Supported: `bachelor`, `master`, and `phd`                        |
 | `\specialization` | Currently, only `cs, ds, ee, med` are supported; more to be added |
 | `\photo`          | Specifies name of photo in photos folder                          |
+| `\photocredit`    | Cover page photographer may be required                           |
 | `\uiscover`       | Display cover page, values 1-9 provide different color schemes    |
 | `\uisbackcover`   | Display back cover using the same color schemes as front cover    |
 | `\faculty`        | Currently, only `tn` is supported                                 |
@@ -82,7 +83,7 @@ _I recommend to use only one of `\department` or `\faculty` to keep the page cle
 Typically, `bachelor` and `master` thesis types should use `\department`, while the `phd` type should use `\faculty`.
 However, you can use both if you prefer.
 
-#### Photos on Cover Page
+### Photo on Cover Page
 
 - If you specify the `photo` package option, the default is to use a department specific photo.
   For example, for `ide` a photo named `photos/ide` will be used.
@@ -90,11 +91,14 @@ However, you can use both if you prefer.
 - If you want to use your own photo, for example a photo of your system, simply place the photo in the `photos` folder and specify the photo name using the `\photo` command.
   The usual image file types are supported.
 
+- You must credit the photographer if you use a photo that you didn't shoot yourself.
+
 **Example:** Cover page with a photo placed in `photos/cern`.
 
 ```latex
 \usepackage[photo]{uis-thesis}
 \photo{cern}
+\photocredit{Ansel Adams}
 ```
 
 ### Language Options
@@ -121,8 +125,6 @@ For Ubuntu, see this thread on [askubuntu.com](https://askubuntu.com/questions/4
 - The translation package seems to override nynorsk or norsk, whichever is defined last
 
 - Default photos are missing from the repository; I hope to add relevant photos soon
-
-- Missing credit page for photos
 
 ## Thanks and Contributions
 
