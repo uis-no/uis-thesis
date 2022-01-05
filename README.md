@@ -7,13 +7,13 @@ You have the possibility to choose between a number of different color combinati
 
 ## Terms of Use
 
-The template code itself use the [LaTeX Project Public License](LICENSE).
+The template code itself is released under the [LaTeX Project Public License](LICENSE).
 
 The use of the image material in the `logo` and `photos` folders is restricted as follows:
 
-> The images can be used by students and employees of the University of Stavanger for the purpose of thesis document production.
+> The images can be used by students and employees of the University of Stavanger for official document production.
 > Images cannot be used for any other purpose without written consent from the University of Stavanger, Department of communication and public affairs (AKS).
-> Photos must be credited on Page 2 of the thesis.
+> Page 2 or the last page of the report must credit the photographer if a photo is used.
 
 ## Usage
 
