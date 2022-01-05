@@ -5,6 +5,16 @@ The template is inspired by the official PhD thesis cover.
 
 You have the possibility to choose between a number of different color combinations and designs for the cover.
 
+## Terms of Use
+
+The template code itself use the [LaTeX Project Public License](LICENSE).
+
+The use of the image material in the `logo` and `photos` folders is restricted as follows:
+
+> The images can be used by students and employees of the University of Stavanger for the purpose of thesis document production.
+> Images cannot be used for any other purpose without written consent from the University of Stavanger, Department of communication and public affairs (AKS).
+> Photos must be credited on Page 2 of the thesis.
+
 ## Usage
 
 See the `example.tex` file for additional details.
@@ -106,8 +116,6 @@ For Ubuntu, see this thread on [askubuntu.com](https://askubuntu.com/questions/4
 ## Known Issues
 
 - The translation package seems to override nynorsk or norsk, whichever is defined last
-
-- Logos are missing from the repository; I hope to add the logos soon
 
 - Default photos are missing from the repository; I hope to add relevant photos soon
 
