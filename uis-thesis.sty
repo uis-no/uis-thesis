@@ -29,7 +29,6 @@
 \RequirePackage{setspace}
 \RequirePackage{adjustbox}
 \RequirePackage{calc}
-\RequirePackage{ifthen}
 
 % Tahoma is a Microsoft font and is available on macOS and Windows.
 % See README.md for Linux font install instructions.
@@ -78,7 +77,7 @@
 }
 
 % ----------------------------------------------------------------------------
-% Declare variables and macros
+% Declare variables and local macros
 % ----------------------------------------------------------------------------
 \def\uis@e{} % empty box to avoid blank space
 \def\uis@logofile{\ifcurrentbaselanguage{Norsk}{logo/uis-logo-no-digital}{logo/uis-logo-en-digital}}
@@ -103,13 +102,13 @@
 \settowidth{\oW}{\includegraphics{#3}}%
 \setlength{\rH}{\oH * \ratio{#1}{\oW}}%
 \setlength{\rW}{\oW * \ratio{#2}{\oH}}%
-\ifthenelse{\lengthtest{\rH < #2}}{%
+\ifdim\rH<#2{%
     \setlength{\cW}{(\rW-#1)*\ratio{\oH}{#2}}%
     \adjincludegraphics[height=#2,clip,trim=0 0 \cW{} 0]{#3}%
-}{%
+}\else{%
     \setlength{\cH}{(\rH-#2)*\ratio{\oW}{#1}}%
     \adjincludegraphics[width=#1,clip,trim=0 \cH{} 0 0]{#3}%
-}%
+}\fi%
 }
 
 % Unless the 'photo' package option is specified, the bottom part of
