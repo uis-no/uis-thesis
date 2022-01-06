@@ -6,6 +6,21 @@ fully-into-border.pdf
 test-uis-template*.pdf
 minimal
 original-logos
+## Local photos that should not be uploaded yet
+photos/cern.png
+photos/cyber-woman.jpg
+photos/gorums-code-dark.png
+photos/gorums-code-light.png
+photos/gorums-code-light2.png
+photos/gorums-code.png
+photos/iep.jpg
+photos/ier.jpg
+photos/ikbm.jpg
+photos/imbm.jpg
+photos/imf.jpg
+photos/isøp.jpg
+photos/network.jpg
+photos/rudolf.jpg
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
