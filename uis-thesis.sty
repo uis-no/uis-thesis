@@ -36,9 +36,7 @@
 \newfontfamily\authorfont{Tahoma Bold}
 \newfontfamily\titlefont[Scale=1.5]{Tahoma Bold}
 
-\newif\if@withphoto\@withphotofalse
 \newif\if@printlogo\@printlogofalse
-\DeclareOption{photo}{\@withphototrue}
 \DeclareOption{print}{\@printlogotrue}
 \DeclareOption*{\PackageWarning{uis-thesis}{Unknown ‘\CurrentOption’}}
 \ProcessOptions\relax
@@ -82,9 +80,9 @@
 \def\uis@e{} % empty box to avoid blank space
 \def\uis@logofile{\ifcurrentbaselanguage{Norsk}{logo/uis-logo-no-digital}{logo/uis-logo-en-digital}}
 
-% Use 'ide.jpg' as the default photo if \department or \photo not provided
-\def\uis@photo{ide}
-\def\photo#1{\def\uis@photo{#1}}
+\newif\if@withphoto\@withphotofalse
+\def\uis@photo{}
+\def\photo#1{\@withphototrue\def\uis@photo{#1}}
 
 \def\uis@photocredit{}
 \def\photocredit#1{
@@ -111,16 +109,17 @@
 }\fi%
 }
 
-% Unless the 'photo' package option is specified, the bottom part of
-% the frontpage is set to an empty minipage due to the ~.
-\def\uis@bottompart{~}
-\if@withphoto
-  \def\uis@bottompart{
-  \hspace*{-2.9mm}
-  \vspace*{-3mm}
-  \ClipImage{1.017\textwidth}{1.03\bottomheight}{photos/\uis@photo}
-  }
-\fi
+% Unless the \photo path is specified, the bottom part of the cover page
+% is set to an empty minipage due to the ~ in the else part.
+\def\uis@bottompart{%
+\if@withphoto{%
+    \hspace*{-2.2mm}%
+    \vspace*{-3mm}%
+    \ClipImage{1.017\textwidth}{1.03\bottomheight}{\uis@photo}%
+}%
+\else{~}%
+\fi%
+}
 
 \def\uis@authors{}
 \def\authors#1{\def\uis@authors{{\authorfont #1}}}
@@ -141,7 +140,6 @@
 \def\department#1{
   \IfTranslation{\languagename}{#1}{
     \def\uis@department{{\mainfont \GetTranslation{#1}}}
-    \ifx\uis@photo#1\else\photo{#1}\fi
   }{
     \PackageError{uis-thesis}{Unknown thesis type ‘#1’}{Legal departments: ide, imf, imbm, ikbm, ier, iep, isøp}
   }

@@ -30,13 +30,16 @@ See the `example.tex` file for additional details.
 \title{New Directions in Machine-verifiable\\ Progress Credentials and Fully Automated and Transparent Admissions Process}
 \authors{Hein Meling}
 \department{ide}
-% Optional: if photo option used, specify name of photo in photos folder
-% \photo{cern}
+% Optional: specify path to photo
+% \photo{photos/cern}
 \thesistype{master}
 \specialization{cs}
 
 \begin{document}
 \uiscover{1}
+%
+% Insert thesis content here
+%
 \uisbackcover
 \end{document}
 ```
@@ -58,7 +61,6 @@ The following package options are currently supported:
 
 | Option  | Description                                                |
 |---------|------------------------------------------------------------|
-| `photo` | Use photo; department specific photos are used by default  |
 | `print` | Align logo placement with color box to facilitate printing |
 
 ### Package Commands
@@ -72,7 +74,7 @@ The package supports the following commands:
 | `\department`     | Lower case department abbreviations, e.g., `ide` and `imbm`       |
 | `\thesistype`     | Supported: `bachelor`, `master`, and `phd`                        |
 | `\specialization` | Currently, only `cs, ds, ee, med` are supported; more to be added |
-| `\photo`          | Specifies name of photo in photos folder                          |
+| `\photo`          | Optional: Specify path to photo on cover page                     |
 | `\photocredit`    | Cover page photographer may be required                           |
 | `\uiscover`       | Display cover page, values 1-9 provide different color schemes    |
 | `\uisbackcover`   | Display back cover using the same color schemes as front cover    |
@@ -85,10 +87,7 @@ However, you can use both if you prefer.
 
 ### Photo on Cover Page
 
-- If you specify the `photo` package option, the default is to use a department specific photo.
-  For example, for `ide` a photo named `photos/ide` will be used.
-
-- If you want to use your own photo, for example a photo of your system, simply place the photo in the `photos` folder and specify the photo name using the `\photo` command.
+- If you want to use your own photo, for example a photo or screenshot of your system, simply specify the path to the photo using the `\photo` command.
   The usual image file types are supported.
 
 - You must credit the photographer if you use a photo that you didn't shoot yourself.
@@ -96,8 +95,7 @@ However, you can use both if you prefer.
 **Example:** Cover page with a photo placed in `photos/cern`.
 
 ```latex
-\usepackage[photo]{uis-thesis}
-\photo{cern}
+\photo{photos/cern}
 \photocredit{Ansel Adams}
 ```
 
@@ -125,8 +123,6 @@ For Ubuntu, see this thread on [askubuntu.com](https://askubuntu.com/questions/4
 
 - Need to find free replacement fonts for Overleaf; the one used on Linux is free.
 
-- Default photos are missing from the repository; I hope to add relevant photos soon
-
 ## Thanks and Contributions
 
 - LaTeX implementation by Hein Meling, December 2021 - January 2022
@@ -136,3 +132,5 @@ For Ubuntu, see this thread on [askubuntu.com](https://askubuntu.com/questions/4
 - Thanks to Susanna King for help and guidance with preparing this template
 
 - Thanks to Rodrigo Saramago for testing on Linux and providing font instructions
+
+- Thanks to Martin Gilje Jaatun for feedback.
