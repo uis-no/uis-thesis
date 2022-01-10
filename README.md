@@ -103,9 +103,10 @@ However, you can use both if you prefer.
 
 ### Language Options
 
-The template supports both `norsk` and any variant of `english`.
+The template supports `norsk`, `nynorsk` and any variant of `english`.
 You can specify the language as an option to the `bable` package or in the `\documentclass`.
-Support for `nynorsk` is not working yet (see known issues below).
+
+Note that `nynorsk` support requires v1.11 of the translations package; hence make sure to update your TeX distribution.
 
 ## Installing Fonts (Linux)
 
@@ -122,7 +123,7 @@ For Ubuntu, see this thread on [askubuntu.com](https://askubuntu.com/questions/4
 
 ## Known Issues
 
-- The translation package seems to override nynorsk or norsk, whichever is defined last
+- Need to find free replacement fonts for Overleaf; the one used on Linux is free.
 
 - Default photos are missing from the repository; I hope to add relevant photos soon
 
