@@ -32,7 +32,7 @@ See the `example.tex` file for additional details.
 \department{ide}
 % Optional: specify path to photo
 % \photo{photos/cern}
-\thesistype{master}
+\reporttype{master}
 \specialization{cs}
 
 \begin{document}
@@ -72,7 +72,7 @@ The package supports the following commands:
 | `\title`          | May use `\\` to force line breaks                                 |
 | `\authors`        | Multiple authors should be separate with `,` and `and`            |
 | `\department`     | Lower case department abbreviations, e.g., `ide` and `imbm`       |
-| `\thesistype`     | Supported: `bachelor`, `master`, and `phd`                        |
+| `\reporttype`     | Supported: `bachelor`, `master`, and `phd`                        |
 | `\specialization` | Currently, only `cs, ds, ee, med` are supported; more to be added |
 | `\photo`          | Optional: Specify path to photo on cover page                     |
 | `\photocredit`    | Cover page photographer may be required                           |
