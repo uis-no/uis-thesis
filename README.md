@@ -72,7 +72,7 @@ The package supports the following commands:
 | `\title`          | May use `\\` to force line breaks                                 |
 | `\authors`        | Multiple authors should be separate with `,` and `and`            |
 | `\department`     | Lower case department abbreviations, e.g., `ide` and `imbm`       |
-| `\reporttype`     | Supported: `bachelor`, `master`, and `phd`                        |
+| `\reporttype`     | Supported: `bachelor`, `master`, `phd`, and `tr`                  |
 | `\specialization` | Currently, only `cs, ds, ee, med` are supported; more to be added |
 | `\photo`          | Optional: Specify path to photo on cover page                     |
 | `\photocredit`    | Cover page photographer may be required                           |
@@ -84,6 +84,20 @@ The package supports the following commands:
 _I recommend to use only one of `\department` or `\faculty` to keep the page clean._
 Typically, `bachelor` and `master` thesis types should use `\department`, while the `phd` type should use `\faculty`.
 However, you can use both if you prefer.
+
+Report types `phd` and `tr` _should_ specify the thesis/report number in square brackets as follows:
+
+```latex
+\reporttype[404]{phd}
+```
+
+PhD thesis and technical report types ignores the `\specialization{}` command, so it is not necessary.
+However, bachelor and master thesis reports must specify the specialization, as follows:
+
+```latex
+\reporttype{master}
+\specialization{cs}
+```
 
 ### Photo on Cover Page
 

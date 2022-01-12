@@ -141,20 +141,25 @@
   \IfTranslation{\languagename}{#1}{
     \def\uis@department{{\mainfont \GetTranslation{#1}}}
   }{
-    \PackageError{uis-thesis}{Unknown thesis type ‘#1’}{Legal departments: ide, imf, imbm, ikbm, ier, iep, isøp}
+    \PackageError{uis-thesis}{Unknown department ‘#1’}{Legal departments: ide, imf, imbm, ikbm, ier, iep, isøp}
   }
 }
 
 \def\uis@title{}
 \def\title#1{\def\uis@title{{\titlefont #1}}}
 
-\def\uis@reporttype{}
-\def\reporttype#1{
-  \IfTranslation{\languagename}{#1}{
-    \def\uis@reporttype{{\mainfont \GetTranslation{#1}}}
-  }{
-    \PackageError{uis-thesis}{Unknown thesis type ‘#1’}{Legal thesis types: bachelor, master, phd}
-  }
+\newcommand{\reporttype}[2][]{
+\IfTranslation{\languagename}{#2}{}{
+  \PackageError{uis-thesis}{Unknown report type ‘#2’}{Legal report types: bachelor, master, phd, tr}
+}
+\def\uis@reportnum{#1}
+\ifx\uis@reportnum\empty
+  % bachelor or master thesis should specify \specialization
+  \def\uis@reportline{{\mainfont \GetTranslation{#2} - \uis@specialization{} - \uis@date{} \hfill \uis@restricted}}
+\else
+  % phd thesis or tech reports have numbers and ignore \specialization
+  \def\uis@reportline{{\mainfont \GetTranslation{#2} UiS no.~\uis@reportnum{} - \uis@date{} \hfill \uis@restricted}}
+\fi
 }
 
 \def\uis@specialization{}
@@ -205,7 +210,7 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 \vspace*{-2mm}
 \rule{\textwidth}{1pt}\par
 \vspace*{1mm}
-\uis@reporttype{} - \uis@specialization{} - \uis@date{} \hfill \uis@restricted
+\uis@reportline{}
 \end{minipage}
 }
 
@@ -265,6 +270,9 @@ www.uis.no                           \par
 \DeclareTranslation{English}{isøp}{Department of Safety, Economics and Planning}
 \DeclareTranslation{Norsk}  {isøp}{Institutt for sikkerheit, økonomi og planlegging} %nynorsk?
 
+\DeclareTranslationFallback {tr}{Technical Report}
+\DeclareTranslation{English}{tr}{Technical Report}
+\DeclareTranslation{Norsk}  {tr}{Teknisk rapport}
 \DeclareTranslationFallback {bachelor}{Bachelor's Thesis}
 \DeclareTranslation{English}{bachelor}{Bachelor's Thesis}
 \DeclareTranslation{Nynorsk}{bachelor}{Bacheloroppgåve}
