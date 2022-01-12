@@ -78,7 +78,11 @@
 % Declare variables and local macros
 % ----------------------------------------------------------------------------
 \def\uis@e{} % empty box to avoid blank space
-\def\uis@logofile{\ifcurrentbaselanguage{Norsk}{logo/uis-logo-no-digital}{logo/uis-logo-en-digital}}
+\if@printlogo
+  \def\uis@logofile{\ifcurrentbaselanguage{Norsk}{logo/uis-logo-no-print}{logo/uis-logo-en-print}}
+\else
+  \def\uis@logofile{\ifcurrentbaselanguage{Norsk}{logo/uis-logo-no-digital}{logo/uis-logo-en-digital}}
+\fi
 
 \newif\if@withphoto\@withphotofalse
 \def\uis@photo{}
