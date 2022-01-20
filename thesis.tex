@@ -1,0 +1,72 @@
+%!TEX TS-program = xelatex
+
+\documentclass[11pt,oneside]{book}
+\usepackage[english]{babel}
+\usepackage{uis-thesis}
+\usepackage{lipsum}           % remove this line when you replaced all \lipsum commands
+\newgeometry{margin=40mm}     % defines the geometry for the document
+\setstretch{1.2}              % defines the default line spacing for the document
+
+% UiS recommends Georgia for the body text, but you are free to use another
+% font for the body text; if you want to use another font just remove this line.
+\setmainfont{Georgia}
+
+%-----------------------------------------------------------------
+\title{New Directions in Machine-verifiable\\ Progress Credentials and Fully Automated and Transparent Admissions Process}
+\authors{Hein Meling}
+\department{ide}
+\photo{photos/ide}
+\photocredit{Hein Meling}
+\reporttype{bachelor}
+\specialization{cs}
+% Uncomment only if your thesis has been granted restricted access
+% \restricted
+
+%-----------------------------------------------------------------
+\begin{document}
+\uiscover{4}                  % pick color scheme 1-9
+\frontmatter
+\pagestyle{empty}
+\declaration
+\input{frontmatter/quote}
+\input{frontmatter/abstract}
+\input{frontmatter/ack}
+
+\tableofcontents
+
+% \input{frontmatter/abbrev}
+% \input{frontmatter/symbols}
+
+%-----------------------------------------------------------------
+\mainmatter	  % Begin normal, numeric (1,2,3...) page numbering
+% \pagestyle{fancy}  % Return the page headers back to the "fancy" style
+
+% Include the chapters of the thesis, as separate files
+% Just uncomment the lines as you write the chapters
+
+\input{chapters/intro}
+\input{chapters/related}
+\input{chapters/design}
+\input{chapters/eval}
+\input{chapters/discussion}
+\input{chapters/conclusions}
+
+%-----------------------------------------------------------------
+% Now begin the Appendices, including them as separate files
+
+% \listoffigures
+% \listoftables
+
+\appendix
+\input{appendices/instructions}
+
+%-----------------------------------------------------------------
+% \backmatter
+
+% \label{Bibliography}
+% \lhead{\emph{Bibliography}}  % Change the left side page header to "Bibliography"
+% \bibliographystyle{unsrtnat}  % Use the "unsrtnat" BibTeX style for formatting the Bibliography
+% \bibliography{Bibliography}  % The references (bibliography) information are stored in the file named "Bibliography.bib"
+
+\uisbackcover
+\end{document}
