@@ -150,5 +150,3 @@ For Ubuntu, see this thread on [askubuntu.com](https://askubuntu.com/questions/4
 - Thanks to Martin Gilje Jaatun for feedback
 
 - Thanks to Vinay Setty for contributing the document instructions
-
-- Test
