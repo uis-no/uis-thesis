@@ -31,11 +31,25 @@
 \RequirePackage{calc}
 \RequirePackage{amssymb}
 
-% Tahoma is a Microsoft font and is available on macOS and Windows.
-% See README.md for Linux font install instructions.
-\newfontfamily\mainfont[Scale=0.9]{Tahoma}
-\newfontfamily\authorfont{Tahoma Bold}
-\newfontfamily\titlefont[Scale=1.5]{Tahoma Bold}
+% Set \homepath to allow checking if running on Overleaf
+\begingroup\endlinechar=-1\relax
+       \everyeof{\noexpand}%
+       \edef\x{\endgroup\def\noexpand\homepath{%
+         \@@input|"kpsewhich --var-value=HOME" }}\x
+\def\overleafhome{/tmp}
+
+\ifx\homepath\overleafhome
+  % Veranda is the currently the one used when running on Overleaf.
+  \newfontfamily\mainfont[Scale=0.9]{Veranda}
+  \newfontfamily\authorfont{Veranda Bold}
+  \newfontfamily\titlefont[Scale=1.5]{Veranda Bold}
+\else
+  % Tahoma is a Microsoft font and is available on macOS and Windows.
+  % See README.md for Linux font install instructions.
+  \newfontfamily\mainfont[Scale=0.9]{Tahoma}
+  \newfontfamily\authorfont{Tahoma Bold}
+  \newfontfamily\titlefont[Scale=1.5]{Tahoma Bold}
+\fi
 
 \newif\if@printlogo\@printlogofalse
 \DeclareOption{print}{\@printlogotrue}
