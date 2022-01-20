@@ -9,7 +9,7 @@ You have the possibility to choose between a number of different color combinati
 
 The template code itself is released under the [LaTeX Project Public License](LICENSE).
 
-The use of the image material in the `logo` and `photos` folders is restricted as follows:
+The use of the image material in the `logo` folders is restricted as follows:
 
 > The images can be used by students and employees of the University of Stavanger for official document production.
 > Images cannot be used for any other purpose without written consent from the University of Stavanger, Department of communication and public affairs (AKS).
@@ -20,7 +20,7 @@ The use of the image material in the `logo` and `photos` folders is restricted a
 See the `example.tex` file for additional details.
 
 ```latex
-\documentclass[12pt]{report}
+\documentclass[11pt]{book}
 \usepackage[american]{babel}
 \usepackage{uis-thesis}
 
