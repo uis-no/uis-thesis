@@ -29,6 +29,7 @@
 \RequirePackage{setspace}
 \RequirePackage{adjustbox}
 \RequirePackage{calc}
+\RequirePackage{amssymb}
 
 % Tahoma is a Microsoft font and is available on macOS and Windows.
 % See README.md for Linux font install instructions.
@@ -150,7 +151,7 @@
 }
 
 \def\uis@title{}
-\def\title#1{\def\uis@title{{\titlefont #1}}}
+\def\title#1{\def\uis@title{#1}}
 
 \newcommand{\reporttype}[2][]{
 \IfTranslation{\languagename}{#2}{}{
@@ -209,7 +210,7 @@ January\or February\or March\or April\or May \or June\or July\or August\or Septe
 \rule{\textwidth}{3pt}\par
 \vspace*{3mm}
 \begin{spacing}{1.5}
-\raggedright \uis@title\par
+\raggedright \titlefont \uis@title\par
 \end{spacing}
 \vspace*{-2mm}
 \rule{\textwidth}{1pt}\par
@@ -382,7 +383,7 @@ www.uis.no                           \par
 
 \newcommand{\uisbackcover}{
 \uis@unicolor
-\begin{titlepage}
+% \begin{titlepage}
 \newgeometry{margin=10mm}    % defines the geometry for the titlepage
 {\setlength{\parindent}{0cm} % turn off indent in this group
 \colorbox{\uis@color@top}{
@@ -393,6 +394,38 @@ www.uis.no                           \par
 \hspace*{\logosep}
 \uis@backbox
 \end{minipage}}}
-\end{titlepage}
+% \end{titlepage}
 \restoregeometry % restores the geometry
+}
+
+\newcommand\acknowledgements{
+ \chapter*{Acknowledgements}
+ \addcontentsline{toc}{chapter}{Acknowledgements}
+}
+\@ifclassloaded{book}{%
+\newcommand\abstract{
+ \chapter*{Abstract}
+ \addcontentsline{toc}{chapter}{Abstract}
+}
+}{}
+
+\newcommand{\declaration}{
+\topskip0pt
+\vspace*{\fill}
+% remove any \\ specified in \title
+\def\\{\relax\ifhmode\unskip\fi\space\ignorespaces}
+I, \uis@authors, declare that this thesis titled, ``\uis@title'' and the work presented in it are my own. I confirm that:
+
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\blacksquare$}
+\item This work was done wholly or mainly while in candidature for a master's degree at the \GetTranslation{uis}.
+
+\item Where I have consulted the published work of others, this is always clearly attributed.
+
+\item Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
+
+\item I have acknowledged all main sources of help.
+\end{itemize}
+\vspace*{\fill}
+\newpage
 }
