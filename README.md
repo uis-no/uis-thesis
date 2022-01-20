@@ -46,14 +46,14 @@ See the `example.tex` file for additional details.
 
 ## Compiling
 
-Unfortunately, due to font requirements it is not possible to compile using `pdflatex`.
-Instead you can use the `xelatex` or `lualatex` engines.
-I'm not aware of any problems using these alternatives over `pdflatex`, but please report any issues in the issue tracker.
-The default engine on Overleaf is `xelatex`.
+To compile your document use either the `xelatex` or `lualatex` engines.
+These are modern LaTeX engines that can use modern fonts via the `fontspec` package.
 
 ```shell
 xelatex example
 ```
+
+I'm not aware of any problems using these alternatives over `pdflatex`, but please report any issues in the issue tracker.
 
 ### Package Options
 
@@ -147,4 +147,6 @@ For Ubuntu, see this thread on [askubuntu.com](https://askubuntu.com/questions/4
 
 - Thanks to Rodrigo Saramago for testing on Linux and providing font instructions
 
-- Thanks to Martin Gilje Jaatun for feedback.
+- Thanks to Martin Gilje Jaatun for feedback
+
+- Thanks to Vinay Setty for contributing the document instructions
