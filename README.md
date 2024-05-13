@@ -20,7 +20,7 @@ The use of the image material in the `logo` folders is restricted as follows:
 See the `example.tex` file for additional details.
 
 ```latex
-\documentclass[11pt]{book}
+\documentclass[11pt, a4paper]{book}
 \usepackage[american]{babel}
 \usepackage{uis-thesis}
 
