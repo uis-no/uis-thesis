@@ -416,6 +416,10 @@ www.uis.no                           \par
  \chapter*{Acknowledgements}
  \addcontentsline{toc}{chapter}{Acknowledgements}
 }
+\newcommand\disclosure{
+ \chapter*{Disclosure}
+ \addcontentsline{toc}{chapter}{Disclosure}
+}
 \@ifclassloaded{book}{%
 \newcommand\abstract{
  \chapter*{Abstract}
@@ -423,22 +427,44 @@ www.uis.no                           \par
 }
 }{}
 
-\newcommand{\declaration}{
-\vspace*{\fill}
-% remove any \\ specified in \title
-\def\\{\relax\ifhmode\unskip\fi\space\ignorespaces}
-I, \uis@authors, declare that this thesis titled, ``\uis@title'' and the work presented in it are my own. I confirm that:
-
+% ----------------------------------------------------------------------------
+% Disclosure instructions and example declaration
+%
+% \disclosureinstructions typesets guidance and a sample declaration to help
+% students write their own disclosure statement, in their own words, about
+% how they used generative AI tools and other significant sources.
+% ----------------------------------------------------------------------------
+\newcommand{\disclosureinstructions}{%
+{\itshape%
+\noindent\textbf{You must write your own declaration. Once you have done so,
+delete this section by removing the \texttt{\textbackslash disclosureinstructions}
+command from \texttt{frontmatter/disclosure.tex}.}
+Describe, in your own words, how you used generative AI tools and any other
+significant aids in producing this thesis; a few honest sentences are enough.
+Your declaration should make clear:
 \begin{itemize}
-\renewcommand{\labelitemi}{\scriptsize$\blacksquare$}
-\item This work was done wholly or mainly while in candidature for a master's degree at the \GetTranslation{uis}.
-
-\item Where I have consulted the published work of others, this is always clearly attributed.
-
-\item Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
-
-\item I have acknowledged all main sources of help.
+\item which tools you used (e.g.\ Claude, Gemini, Copilot, Ollama etc.);
+\item what you used them for (e.g.\ drafting prose, restructuring,
+      code, proofreading, generating figures, or reviewing arguments);
+\item which parts of the thesis were materially affected; and
+\item that you have verified the correctness and originality of all content,
+      including any references.
 \end{itemize}
-\vspace*{\fill}
-\newpage
+You remain fully accountable for everything in this thesis, including any
+AI-assisted content and any fabricated references or data. Only humans may be
+listed as authors.
+
+\medskip
+\noindent\textbf{Example.} The paragraph below illustrates the expected style
+and level of detail.\par}
+
+\medskip
+\noindent We used Claude (Anthropic) and ChatGPT (OpenAI) throughout this thesis to
+help with exposition and structural organization, to refine the presentation of our
+algorithms, and to obtain adversarial feedback on our arguments and proofs. The tools
+shaped the wording and framing in most chapters, and they suggested several ideas we
+explored when designing the experimental evaluation. All technical content---including
+the algorithms, definitions, theorems, proofs, and the design and analysis of the
+experiments---is our own. We have checked every result for correctness and verified the
+accuracy and originality of all content, including the references.
 }
