@@ -30,6 +30,7 @@
 \RequirePackage{adjustbox}
 \RequirePackage{calc}
 \RequirePackage{amssymb}
+\RequirePackage{comment}
 
 % Set \homepath to allow checking if running on Overleaf
 \begingroup\endlinechar=-1\relax
@@ -53,6 +54,8 @@
 
 \newif\if@printlogo\@printlogofalse
 \DeclareOption{print}{\@printlogotrue}
+\newif\if@showinstructions\@showinstructionstrue
+\DeclareOption{noinstructions}{\@showinstructionsfalse}
 \DeclareOption*{\PackageWarning{uis-thesis}{Unknown ‘\CurrentOption’}}
 \ProcessOptions\relax
 
@@ -426,6 +429,20 @@ www.uis.no                           \par
  \addcontentsline{toc}{chapter}{Abstract}
 }
 }{}
+
+% ----------------------------------------------------------------------------
+% Instructions environment
+%
+% Wrap instructions, guidelines and suggestions in the `instructions'
+% environment. Leave them in the source while writing, and call
+% \hideinstructions in the preamble (or pass the `noinstructions' package
+% option) to omit all of them from the rendered PDF, e.g., for reviewers or
+% the final version.
+% ----------------------------------------------------------------------------
+\newcommand{\showinstructions}{%
+  \specialcomment{instructions}{\begingroup\small}{\par\endgroup}}
+\newcommand{\hideinstructions}{\excludecomment{instructions}}
+\if@showinstructions\showinstructions\else\hideinstructions\fi
 
 % ----------------------------------------------------------------------------
 % Disclosure instructions and example declaration

@@ -5,6 +5,11 @@ The template is inspired by the official PhD thesis cover.
 
 You have the possibility to choose between a number of different color combinations and designs for the cover.
 
+## Links
+
+- [Overleaf template](https://www.overleaf.com/latex/templates/uis-thesis-template/qhfrhftzwqbc)
+- UiS thesis writing pages for the Faculty of Science and Technology: [English](https://www.uis.no/en/student-pages/studies/thesis-writing-at-faculty-of-science-and-technology), [Norsk](https://www.uis.no/nb/studentsider/studier/oppgaveskriving-ved-det-teknisk-naturvitenskapelige-fakultet)
+
 ## Terms of Use
 
 The template code itself is released under the [LaTeX Project Public License](LICENSE).
@@ -62,6 +67,7 @@ The following package options are currently supported:
 | Option  | Description                                                |
 |---------|------------------------------------------------------------|
 | `print` | Align logo placement with color box to facilitate printing |
+| `noinstructions` | Hide all `instructions` environments (same as `\hideinstructions`) |
 
 ### Package Commands
 
@@ -98,6 +104,12 @@ However, bachelor and master thesis reports must specify the specialization, as 
 \reporttype{master}
 \specialization{cs}
 ```
+
+### Instructions and Guidelines
+
+Instructions, guidelines and suggestions in the template are wrapped in the `instructions` environment.
+Leave them in the source while writing; to omit all of them from the rendered PDF (e.g., for reviewers or the final version), add `\hideinstructions` to the preamble, or pass the `noinstructions` option to the package.
+Use `\begin{instructions} ... \end{instructions}` for your own notes to be hidden in the same way.
 
 ### Photo on Cover Page
 

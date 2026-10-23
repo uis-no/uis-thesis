@@ -10,3 +10,73 @@ Write your Appendix content here.
 
 This is how you can write the content of your Appendix.
 You can have multiple sections and subsections as needed.
+
+\begin{instructions}
+\section{Template Resources}
+\label{apx:instructions:resources}
+
+\begin{itemize}
+\item Overleaf template: \url{https://www.overleaf.com/latex/templates/uis-thesis-template/qhfrhftzwqbc}
+\item Thesis writing at the Faculty of Science and Technology (English): \url{https://www.uis.no/en/student-pages/studies/thesis-writing-at-faculty-of-science-and-technology}
+\item Oppgaveskriving ved det teknisk-naturvitenskapelige fakultet (norsk): \url{https://www.uis.no/nb/studentsider/studier/oppgaveskriving-ved-det-teknisk-naturvitenskapelige-fakultet}
+\end{itemize}
+
+\section{Examples of Commonly Used Packages}
+\label{apx:instructions:packages}
+
+The packages below are loaded in \texttt{thesis.tex}.
+Remove those that you do not need.
+
+\paragraph{cleveref.}
+\cref{apx:instructions} and \cref{apx:instructions:packages} are cross-referenced with \verb|\cref{label}|; the type (chapter, section, \dots) is added automatically.
+
+\paragraph{booktabs and multirow.}
+\Cref{tab:example} shows a table with \texttt{booktabs} rules and a \texttt{multirow} cell.
+\begin{table}[t]
+\centering
+\caption{Example table.}
+\label{tab:example}
+\begin{tabular}{llr}
+\toprule
+Group & Item & Value \\
+\midrule
+\multirow{2}{*}{A} & first  & 1 \\
+                   & second & 2 \\
+B                  & third  & 3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{algorithm and algpseudocode.}
+\Cref{alg:example} shows a floating algorithm.
+\begin{algorithm}[t]
+\caption{Sum of a list}
+\label{alg:example}
+\begin{algorithmic}[1]
+\Procedure{Sum}{$a_1,\dots,a_n$}
+  \State $s \gets 0$
+  \For{$i \gets 1$ \textbf{to} $n$}
+    \State $s \gets s + a_i$
+  \EndFor
+  \State \Return $s$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{listings.}
+\Cref{lst:example} shows a source code listing.
+\begin{lstlisting}[caption={Example listing.},label={lst:example},basicstyle=\ttfamily\small]
+func Sum(a []int) (s int) {
+	for _, v := range a {
+		s += v
+	}
+	return
+}
+\end{lstlisting}
+
+\paragraph{xspace.}
+Define macros such as \verb|\newcommand{\sys}{MySystem\xspace}| so that spacing after the macro is handled correctly.
+
+\paragraph{Other useful packages.}
+Consider \texttt{pgfplots} and \texttt{pgfplotstable} for plots and tables from data, and \texttt{acronym} for managing abbreviations.
+\end{instructions}
