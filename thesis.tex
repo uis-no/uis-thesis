@@ -11,7 +11,30 @@
 % font for the body text; if you want to use another font just remove this line.
 \setmainfont{Georgia}
 
-\usepackage{hyperref} % include hyperref to enable citations, references and url to appear as clickable links
+% Packages commonly needed in a thesis; remove those you do not need.
+% See appendices/instructions.tex for short examples of how to use them.
+\usepackage{hyperref} % clickable links for citations, references and urls
+\usepackage[capitalize,nameinlink]{cleveref} % use \cref{...} for cross-references; load after hyperref
+\usepackage{booktabs}   % nicer tables
+\usepackage{multirow}   % table cells spanning multiple rows
+\usepackage{xspace}     % for macros that end a word
+\usepackage{algorithm}  % floating algorithms
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}   % source code listings
+\crefname{lstlisting}{listing}{listings}
+\Crefname{lstlisting}{Listing}{Listings}
+\hypersetup{breaklinks=true,
+  pdfauthor={Hein Meling}, % change to your name
+  pdftitle={Thesis Title}, % change to your title
+  colorlinks=true,
+  citecolor=black,
+  urlcolor=black,
+  linkcolor=black,
+  pdfborder={0 0 0}}
+
+% Instructions and guidelines are included by default. Uncomment the line
+% below to hide all of them, e.g., in the version for reviewers or the final version.
+% \hideinstructions
 
 %-----------------------------------------------------------------
 \title{New Directions in Machine-verifiable\\ Progress Credentials and Fully Automated and Transparent Admissions Process}
@@ -59,6 +82,7 @@
 
 \appendix
 \input{appendices/instructions}
+\input{appendices/checklist}
 
 %-----------------------------------------------------------------
 % \backmatter
